@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,8 +33,36 @@ public class BoxControllerTests {
     }
 
     @Test
-    public void testRecordRequest() throws Exception {
+    public void testGetRecordRequest() throws Exception {
         this.mockMvc.perform(get("/any_path").accept(MediaType.ALL))
+                .andExpect(content().string("OK"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPostRecordRequest() throws Exception {
+        this.mockMvc.perform(post("/any_path").content("Some content string.").accept(MediaType.ALL))
+                .andExpect(content().string("OK"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPutRecordRequest() throws Exception {
+        this.mockMvc.perform(put("/any_path").content("Some content string.").accept(MediaType.ALL))
+                .andExpect(content().string("OK"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPatchRecordRequest() throws Exception {
+        this.mockMvc.perform(patch("/any_path").content("Some content string.").accept(MediaType.ALL))
+                .andExpect(content().string("OK"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteRecordRequest() throws Exception {
+        this.mockMvc.perform(delete("/any_path").content("Some content string.").accept(MediaType.ALL))
                 .andExpect(content().string("OK"))
                 .andExpect(status().isOk());
     }
