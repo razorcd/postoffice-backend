@@ -32,35 +32,48 @@ public class BoxControllerTests {
 
     @Test
     public void testGetRecordRequest() throws Exception {
-        this.mockMvc.perform(get("/any_path").accept(MediaType.ALL))
+        this.mockMvc.perform(
+                    get("/any_path"))
                 .andExpect(content().string("OK"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testPostRecordRequest() throws Exception {
-        this.mockMvc.perform(post("/any_path").content("Some content string.").accept(MediaType.ALL))
+        this.mockMvc.perform(
+                    post("/any_path")
+                            .content("Some content string.")
+                            .contentType(MediaType.TEXT_PLAIN))
                 .andExpect(content().string("OK"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testPutRecordRequest() throws Exception {
-        this.mockMvc.perform(put("/any_path").content("Some content string.").accept(MediaType.ALL))
+        this.mockMvc.perform(
+                    put("/any_path")
+                            .content("Some content string.")
+                            .contentType(MediaType.TEXT_PLAIN))
                 .andExpect(content().string("OK"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testPatchRecordRequest() throws Exception {
-        this.mockMvc.perform(patch("/any_path").content("Some content string.").accept(MediaType.ALL))
+        this.mockMvc.perform(
+                    patch("/any_path")
+                            .content("Some content string.")
+                            .contentType(MediaType.TEXT_PLAIN))
                 .andExpect(content().string("OK"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteRecordRequest() throws Exception {
-        this.mockMvc.perform(delete("/any_path").content("Some content string.").accept(MediaType.ALL))
+        this.mockMvc.perform(
+                    delete("/any_path")
+                            .content("Some content string.")
+                            .contentType(MediaType.TEXT_PLAIN))
                 .andExpect(content().string("OK"))
                 .andExpect(status().isOk());
     }

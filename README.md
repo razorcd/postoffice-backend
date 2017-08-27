@@ -6,9 +6,9 @@
 
 ## TODO:
 
-- implement persistence of the incomingRequests
-- build frontend to view the persisted incomingRequests with an automatic refresher
-- add authentication and authorization to differentiate incomingRequests by user
-- define the complete incomingRequest domain
-- implement websockets to send new incomingRequests to frontend
-- move incomingRequests to NoSql
+- [] implement persistence of the incomingRequests
+- [] build frontend to view the persisted incomingRequests with an automatic refresher
+- [] add authentication and authorization to differentiate incomingRequests by user
+- [] define the complete incomingRequest domain
+- [] implement websockets to send new incomingRequests to frontend
+- [] move incomingRequests to NoSql
