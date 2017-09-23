@@ -20,7 +20,7 @@ public class IncomingRequestServiceTests {
 
     @Before
     public void init() {
-        subject = new IncomingRequestService(incomingRequestRepositoryMock);
+        subject = new IncomingRequestServiceImpl(incomingRequestRepositoryMock);
     }
 
     @Test

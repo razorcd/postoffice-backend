@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IncomingRequestService {
+public class IncomingRequestServiceImpl implements IncomingRequestService {
 
     IncomingRequestRepository incomingRequestRepository;
 
     @Autowired
-    public IncomingRequestService(IncomingRequestRepository incomingRequestRepository) {
+    public IncomingRequestServiceImpl(IncomingRequestRepository incomingRequestRepository) {
         this.incomingRequestRepository = incomingRequestRepository;
     }
 

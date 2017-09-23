@@ -1,6 +1,7 @@
 package com.postbox.postbox.controler;
 
 import com.postbox.postbox.service.IncomingRequestService;
+import com.postbox.postbox.service.IncomingRequestServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class BoxController {
 
-    IncomingRequestService incomingRequestService;
+    IncomingRequestService incomingRequestServiceImpl;
 
     @Autowired
-    public BoxController(IncomingRequestService incomingRequestService) {
-        this.incomingRequestService = incomingRequestService;
+    public BoxController(IncomingRequestService incomingRequestServiceImpl) {
+        this.incomingRequestServiceImpl = incomingRequestServiceImpl;
     }
 
     @RequestMapping(value = "/**")
     public ResponseEntity<String> recordRequest(@RequestBody(required = false) String payload, HttpServletRequest request) {
         String fullRequest = payload; //TODO: add all request fields into an object
-        incomingRequestService.save(fullRequest);
+        incomingRequestServiceImpl.save(fullRequest);
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 }
