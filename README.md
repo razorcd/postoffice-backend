@@ -6,6 +6,7 @@
 
 ## TODO:
 - [] implement persistence of the incomingRequests
+- [] add integration tests
 - [] build frontend to view the persisted incomingRequests with an automatic refresher
 - [] add tests to cover all contentTypes, bodies, methods, etc
 - [] add authentication and authorization to differentiate incomingRequests by user
