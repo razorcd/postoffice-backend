@@ -1,7 +1,6 @@
-package com.postbox.postbox.controler;
+package com.postbox.controler;
 
-import com.postbox.postbox.service.IncomingRequestService;
-import com.postbox.postbox.service.IncomingRequestServiceImpl;
+import com.postbox.service.IncomingRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

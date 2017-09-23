@@ -1,7 +1,7 @@
-package com.postbox.postbox.service;
+package com.postbox.service;
 
-import com.postbox.postbox.model.IncomingRequest;
-import com.postbox.postbox.repository.IncomingRequestRepository;
+import com.postbox.model.IncomingRequest;
+import com.postbox.repository.IncomingRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

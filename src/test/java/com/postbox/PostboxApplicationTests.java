@@ -1,4 +1,4 @@
-package com.postbox.postbox;
+package com.postbox;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

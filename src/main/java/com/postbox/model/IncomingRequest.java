@@ -1,9 +1,9 @@
-package com.postbox.postbox.model;
+package com.postbox.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "incoming_repositories")
+@Table(name = "incoming_requests")
 public class IncomingRequest {
 
     @Id

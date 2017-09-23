@@ -1,7 +1,7 @@
-package com.postbox.postbox.service;
+package com.postbox.service;
 
-import com.postbox.postbox.model.IncomingRequest;
-import com.postbox.postbox.repository.IncomingRequestRepository;
+import com.postbox.model.IncomingRequest;
+import com.postbox.repository.IncomingRequestRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

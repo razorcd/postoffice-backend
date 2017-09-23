@@ -1,6 +1,6 @@
-package com.postbox.postbox.Controller;
+package com.postbox.Controller;
 
-import com.postbox.postbox.controler.BoxController;
+import com.postbox.controler.BoxController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,13 +1,9 @@
-package com.postbox.postbox.repository;
+package com.postbox.repository;
 
-import com.postbox.postbox.model.IncomingRequest;
-import org.springframework.stereotype.Repository;
+import com.postbox.model.IncomingRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.transaction.Transactional;
-
-@Repository
-//@Transactional
-public interface IncomingRequestRepository {
+public interface IncomingRequestRepository extends JpaRepository<IncomingRequest, Long> {
 
     IncomingRequest save(IncomingRequest incomingRequest);
 }

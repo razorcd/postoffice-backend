@@ -1,6 +1,6 @@
-package com.postbox.postbox.service;
+package com.postbox.service;
 
-import com.postbox.postbox.model.IncomingRequest;
+import com.postbox.model.IncomingRequest;
 
 public interface IncomingRequestService {
     IncomingRequest save(String body);
