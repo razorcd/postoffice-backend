@@ -12,3 +12,4 @@
 - [] define the complete incomingRequest domain
 - [] implement websockets to send new incomingRequests to frontend
 - [] move incomingRequests to NoSql
+- [] separate props by env
