@@ -1,5 +1,6 @@
 package com.postbox.service;
 
+import com.postbox.factory.IncomingRequestFactory;
 import com.postbox.model.IncomingRequest;
 import com.postbox.repository.IncomingRequestRepository;
 import org.junit.Before;
@@ -25,9 +26,7 @@ public class IncomingRequestServiceTests {
 
     @Test
     public void testSave() {
-        //TODO: create entity factories
-        IncomingRequest incomingRequestDummy = new IncomingRequest();
-        incomingRequestDummy.setBody("test body");
+        IncomingRequest incomingRequestDummy = IncomingRequestFactory.generate();
 
         subject.save(incomingRequestDummy.getBody());
 
