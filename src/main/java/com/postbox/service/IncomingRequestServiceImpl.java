@@ -15,9 +15,7 @@ public class IncomingRequestServiceImpl implements IncomingRequestService {
         this.incomingRequestRepository = incomingRequestRepository;
     }
 
-    public IncomingRequest save(String body) {
-        IncomingRequest incomingRequest = new IncomingRequest();
-        incomingRequest.setBody(body);
+    public IncomingRequest save(IncomingRequest incomingRequest) {
         return incomingRequestRepository.save(incomingRequest);
     }
 }

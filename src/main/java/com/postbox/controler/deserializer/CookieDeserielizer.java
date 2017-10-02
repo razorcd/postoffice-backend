@@ -1,0 +1,45 @@
+package com.postbox.controler.deserializer;
+
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.Cookie;
+
+@Component
+public class CookieDeserielizer {
+
+    public String getName(Cookie cookie) {
+        return cookie.getName();
+    }
+
+    public String getValue(Cookie cookie) {
+        return cookie.getValue();
+    }
+
+    public int getVersion(Cookie cookie) {
+        return cookie.getVersion();
+    }
+
+    public String getComment(Cookie cookie) {
+        return getComment();
+    }
+
+    public String getDomain(Cookie cookie) {
+        return getDomain();
+    }
+
+    public int getMaxAge(Cookie cookie) {
+        return getMaxAge();
+    }
+
+    public String getPath(Cookie cookie) {
+        return cookie.getPath();
+    }
+
+    public boolean isSecure(Cookie cookie) {
+        return cookie.getSecure();
+    }
+
+    public boolean isHttpOnly(Cookie cookie) {
+        return cookie.isHttpOnly();
+    }
+}
