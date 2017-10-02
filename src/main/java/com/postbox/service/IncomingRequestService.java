@@ -2,6 +2,11 @@ package com.postbox.service;
 
 import com.postbox.model.IncomingRequest;
 
+import java.util.List;
+
 public interface IncomingRequestService {
-    IncomingRequest save(IncomingRequest incomingRequest);
+
+    List<IncomingRequest> getAll();
+
+    void save(IncomingRequest incomingRequest);
 }

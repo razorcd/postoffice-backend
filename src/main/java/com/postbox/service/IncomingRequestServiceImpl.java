@@ -5,6 +5,8 @@ import com.postbox.repository.IncomingRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IncomingRequestServiceImpl implements IncomingRequestService {
 
@@ -15,7 +17,11 @@ public class IncomingRequestServiceImpl implements IncomingRequestService {
         this.incomingRequestRepository = incomingRequestRepository;
     }
 
-    public IncomingRequest save(IncomingRequest incomingRequest) {
-        return incomingRequestRepository.save(incomingRequest);
+    public List<IncomingRequest> getAll() {
+        return incomingRequestRepository.findAll();
+    }
+
+    public void save(IncomingRequest incomingRequest) {
+        incomingRequestRepository.save(incomingRequest);
     }
 }
