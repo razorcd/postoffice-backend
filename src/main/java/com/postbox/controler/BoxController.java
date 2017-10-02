@@ -61,7 +61,7 @@ public class BoxController {
         incomingRequestServiceImpl.save(incomingRequest);
 
 //        response.reset();
-        response.setStatus(HttpStatus.NO_CONTENT.value());
+//        response.setStatus(HttpStatus.NO_CONTENT.value());
 
 //        for (Cookie cookie : request.getCookies()) {
 //            cookie.setValue("");
