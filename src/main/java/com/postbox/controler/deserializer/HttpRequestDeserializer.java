@@ -2,6 +2,7 @@ package com.postbox.controler.deserializer;
 
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -33,6 +34,10 @@ public class HttpRequestDeserializer {
             headers.put(headerKey, request.getHeader(headerKey));
         }
         return headers;
+    }
+
+    public Cookie[] getCookies(HttpServletRequest request) {
+        return request.getCookies();
     }
 
     public String getBody(HttpServletRequest request) {

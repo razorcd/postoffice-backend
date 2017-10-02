@@ -35,7 +35,7 @@ public class BoxController {
     public ResponseEntity<String> recordRequest(HttpServletRequest request, HttpServletResponse response) {
 
         //TODO: move this to a servlet parser
-        IncomingRequest incomingRequest = new HttpRequestMapper(httpRequestDeserializer, cookieDeserielizer).httpServletRequestToDto(request);
+        IncomingRequest incomingRequest = new HttpRequestMapper(httpRequestDeserializer, cookieDeserielizer).httpServletRequestToIncomingRequestModel(request);
         incomingRequestServiceImpl.save(incomingRequest);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

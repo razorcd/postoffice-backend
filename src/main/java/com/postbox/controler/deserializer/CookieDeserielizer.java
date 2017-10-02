@@ -20,15 +20,15 @@ public class CookieDeserielizer {
     }
 
     public String getComment(Cookie cookie) {
-        return getComment();
+        return cookie.getComment();
     }
 
     public String getDomain(Cookie cookie) {
-        return getDomain();
+        return cookie.getDomain();
     }
 
     public int getMaxAge(Cookie cookie) {
-        return getMaxAge();
+        return cookie.getMaxAge();
     }
 
     public String getPath(Cookie cookie) {

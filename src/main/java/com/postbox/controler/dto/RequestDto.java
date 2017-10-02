@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
+// TODO: remove. Not Used. Or use in servlet parser.
 public class RequestDto {
 
     private String url;

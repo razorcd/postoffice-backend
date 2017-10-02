@@ -2,29 +2,40 @@ package com.postbox.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Map;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "incoming_requests")
 public class IncomingRequest {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Lob
     @NotNull
+    @Size(max=16664) // max 2083 characters
     private String url;
 
     @NotNull
+    @Column(length = 16)
+    @Size(max=16)
     private String method;
 
-    private Map<String, String[]> params;
-    private Map<String, String> headers;
-    private List<Cookie> cookies;
+    @Lob
+    @Size(max=65535)
+    private String params;
 
     @Lob
-    @Column(length=1024)
+    @Size(max=65535)
+    private String headers;
+
+    @Lob
+    @Size(max=32744) // cookie max size is 4093 bytes
+    private String cookies;
+
+    @Lob
+    @Size(max=16777216) //2MB
     private String body;
 
     public long getId() {
@@ -51,27 +62,27 @@ public class IncomingRequest {
         this.method = method;
     }
 
-    public Map<String, String[]> getParams() {
+    public String getParams() {
         return params;
     }
 
-    public void setParams(Map<String, String[]> params) {
+    public void setParams(String params) {
         this.params = params;
     }
 
-    public Map<String, String> getHeaders() {
+    public String getHeaders() {
         return headers;
     }
 
-    public void setHeaders(Map<String, String> headers) {
+    public void setHeaders(String headers) {
         this.headers = headers;
     }
 
-    public List<Cookie> getCookies() {
+    public String getCookies() {
         return cookies;
     }
 
-    public void setCookies(List<Cookie> cookies) {
+    public void setCookies(String cookies) {
         this.cookies = cookies;
     }
 

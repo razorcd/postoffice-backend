@@ -37,28 +37,31 @@ public class HttpRequestMapper {
 
         incomingRequest.setUrl(httpRequestDeserializer.getUrl(request));
         incomingRequest.setMethod(httpRequestDeserializer.getMethod(request));
-        incomingRequest.setParams(httpRequestDeserializer.getParams(request));
-        incomingRequest.setHeaders(httpRequestDeserializer.getHeaders(request));
+        incomingRequest.setParams(httpRequestDeserializer.getParams(request).toString());
+        incomingRequest.setHeaders(httpRequestDeserializer.getHeaders(request).toString());
         incomingRequest.setBody(httpRequestDeserializer.getBody(request));
 
-        incomingRequest.setCookies(servletCookieToCookieModel(request));
+        incomingRequest.setCookies(servletCookieToCookieModel(request).toString());
 
         return incomingRequest;
     }
 
     private List<Cookie> servletCookieToCookieModel(HttpServletRequest request) {
-        return Arrays.stream(request.getCookies()).map(servletCookie -> {
-            Cookie cookie = new Cookie();
-            cookie.setName(cookieDeserielizer.getName(servletCookie));
-            cookie.setName(cookieDeserielizer.getValue(servletCookie));
-            cookie.setVersion(cookieDeserielizer.getVersion(servletCookie));
-            cookie.setComment(cookieDeserielizer.getComment(servletCookie));
-            cookie.setDomain(cookieDeserielizer.getDomain(servletCookie));
-            cookie.setMaxAge(cookieDeserielizer.getMaxAge(servletCookie));
-            cookie.setPath(cookieDeserielizer.getPath(servletCookie));
-            cookie.setSecure(cookieDeserielizer.isSecure(servletCookie));
-            cookie.setHttpOnly(cookieDeserielizer.isHttpOnly(servletCookie));
-            return cookie;
-        }).collect(Collectors.toList());
+        return Arrays.stream(httpRequestDeserializer.getCookies(request)).
+            map(servletCookie -> {
+                Cookie cookie = new Cookie();
+
+                cookie.setName(cookieDeserielizer.getName(servletCookie));
+                cookie.setName(cookieDeserielizer.getValue(servletCookie));
+                cookie.setVersion(cookieDeserielizer.getVersion(servletCookie));
+                cookie.setComment(cookieDeserielizer.getComment(servletCookie));
+                cookie.setDomain(cookieDeserielizer.getDomain(servletCookie));
+                cookie.setMaxAge(cookieDeserielizer.getMaxAge(servletCookie));
+                cookie.setPath(cookieDeserielizer.getPath(servletCookie));
+                cookie.setSecure(cookieDeserielizer.isSecure(servletCookie));
+                cookie.setHttpOnly(cookieDeserielizer.isHttpOnly(servletCookie));
+
+                return cookie;
+            }).collect(Collectors.toList());
     }
 }
