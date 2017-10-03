@@ -8,6 +8,8 @@ import com.postbox.model.IncomingRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class HttpRequestMapper {
@@ -46,22 +48,27 @@ public class HttpRequestMapper {
         return incomingRequest;
     }
 
-    private List<Cookie> servletCookieToCookieModel(HttpServletRequest request) {
-        return Arrays.stream(httpRequestDeserializer.getCookies(request)).
-            map(servletCookie -> {
-                Cookie cookie = new Cookie();
+    private Optional<List<Cookie>> servletCookieToCookieModel(HttpServletRequest request) {
+        AtomicReference<List<Cookie>> cookieList = new AtomicReference<>();
 
-                cookie.setName(cookieDeserielizer.getName(servletCookie));
-                cookie.setName(cookieDeserielizer.getValue(servletCookie));
-                cookie.setVersion(cookieDeserielizer.getVersion(servletCookie));
-                cookie.setComment(cookieDeserielizer.getComment(servletCookie));
-                cookie.setDomain(cookieDeserielizer.getDomain(servletCookie));
-                cookie.setMaxAge(cookieDeserielizer.getMaxAge(servletCookie));
-                cookie.setPath(cookieDeserielizer.getPath(servletCookie));
-                cookie.setSecure(cookieDeserielizer.isSecure(servletCookie));
-                cookie.setHttpOnly(cookieDeserielizer.isHttpOnly(servletCookie));
+         Optional.ofNullable(httpRequestDeserializer.getCookies(request)).ifPresent( servletCookies -> {
+             cookieList.set(Arrays.stream(servletCookies).map(servletCookie -> {
+                        Cookie cookie = new Cookie();
 
-                return cookie;
-            }).collect(Collectors.toList());
+                        cookie.setName(cookieDeserielizer.getName(servletCookie));
+                        cookie.setName(cookieDeserielizer.getValue(servletCookie));
+                        cookie.setVersion(cookieDeserielizer.getVersion(servletCookie));
+                        cookie.setComment(cookieDeserielizer.getComment(servletCookie));
+                        cookie.setDomain(cookieDeserielizer.getDomain(servletCookie));
+                        cookie.setMaxAge(cookieDeserielizer.getMaxAge(servletCookie));
+                        cookie.setPath(cookieDeserielizer.getPath(servletCookie));
+                        cookie.setSecure(cookieDeserielizer.isSecure(servletCookie));
+                        cookie.setHttpOnly(cookieDeserielizer.isHttpOnly(servletCookie));
+
+                        return cookie;
+                    }).collect(Collectors.toList()));
+        });
+
+         return Optional.ofNullable(cookieList.get());
     }
 }

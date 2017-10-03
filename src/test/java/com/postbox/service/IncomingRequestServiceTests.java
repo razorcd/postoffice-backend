@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.mockito.BDDMockito.*;
@@ -26,11 +27,12 @@ public class IncomingRequestServiceTests {
 
     @Test
     public void testSave() {
-//        IncomingRequest incomingRequestDummy = IncomingRequestFactory.generate();
-//
-//        subject.save(incomingRequestDummy.getBody());
-//
-//        verify(incomingRequestRepositoryMock, times(1)).save(refEq(incomingRequestDummy));
+
+        IncomingRequest incomingRequestDummy = IncomingRequestFactory.generate();
+
+        subject.save(incomingRequestDummy);
+
+        verify(incomingRequestRepositoryMock, times(1)).save(refEq(incomingRequestDummy));
 
     }
 

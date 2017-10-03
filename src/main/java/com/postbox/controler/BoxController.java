@@ -60,6 +60,9 @@ public class BoxController {
         IncomingRequest incomingRequest = new HttpRequestMapper(httpRequestDeserializer, cookieDeserielizer).httpServletRequestToIncomingRequestModel(request);
         incomingRequestServiceImpl.save(incomingRequest);
 
+
+
+        JavaObjectSerializer.write(request, response);
 //        response.reset();
 //        response.setStatus(HttpStatus.NO_CONTENT.value());
 
