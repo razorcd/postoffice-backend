@@ -79,6 +79,10 @@ public class BoxController {
 //            request.getHeader(headerName);
 //        }
 
+
+
+//        response.addIntHeader("Refresh", 3);
+
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

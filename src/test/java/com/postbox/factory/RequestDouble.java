@@ -1,7 +1,7 @@
 package com.postbox.factory;
 
 import com.github.javafaker.Faker;
-import org.springframework.http.HttpMethod;
+import com.postbox.utils.Helper;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -10,12 +10,10 @@ import javax.servlet.http.Cookie;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RequestDouble {
 
-    private String SERVICE_PATH = "/incoming";
     private Faker faker = new Faker();
 
     private String url;
@@ -26,40 +24,13 @@ public class RequestDouble {
     private Cookie[] cookies;
     private String body;
 
+    private MockHttpServletRequestBuilder mockHttpServletRequestBuilder;
+
+    /**
+     * A wrapper class that generates a MockHttpServletRequestBuilder with random data but also allows access to all the generated properties for further Response testing.
+     */
     public RequestDouble() {
-        this.url = SERVICE_PATH+faker.lorem().characters(0,100);
-        this.method = pickOne(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTION"));
-        this.contentType = pickOne(Arrays.asList(MediaType.ALL_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE));
-
-        this.params = new HashMap<String, String[]>();
-
-        String[] paramValue = {"value1"};
-        this.params.put("param1", paramValue);
-        this.headers = new HashMap<String, String>();
-        this.headers.put("header1", "value1");
-
-        Cookie[] tempCookies = { new Cookie(
-                faker.lorem().characters(0, 500, true),
-                faker.lorem().characters(0, 500, true)
-        ))}
-        this.cookies = tempCookies;
-
-        this.body = faker.lorem().characters(0,5000,true);
-    }
-
-    private String pickOne(List<String> list) {
-        return list.get((int)(Math.random() * list.size()));
-    }
-
-    public MockHttpServletRequestBuilder generate() {
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.request(this.getMethod(), URI.create(this.getUrl()));
-        request.content(this.getBody());
-        request.contentType(this.getContentType());
-        request.accept(MediaType.TEXT_PLAIN);
-        request.cookie(getCookies());
-        request.header(getHeaders().get(0), getHeaders().get(1));
-        request.param(getParams().get(0), getParams().get(0));
-        return request;
+        generatePropertiesWithRandomData();
     }
 
     public String getUrl() {
@@ -116,5 +87,42 @@ public class RequestDouble {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public MockHttpServletRequestBuilder getMockHttpServletRequestBuilder() {
+        createMockHttpServletRequestBuilder();
+        return mockHttpServletRequestBuilder;
+    }
+
+    private void generatePropertiesWithRandomData() {
+        this.url = faker.lorem().characters(0,100);
+        this.method = Helper.pickOne(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTION"));
+        this.contentType = Helper.pickOne(Arrays.asList(MediaType.ALL_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE));
+
+        this.params = new HashMap<String, String[]>();
+        String[] paramValue = {"value1"};
+        this.params.put("param1", paramValue);
+
+        this.headers = new HashMap<String, String>();
+        this.headers.put("header1", "value1");
+
+        Cookie[] tempCookies = { new Cookie(
+                faker.lorem().characters(0, 500, true),
+                faker.lorem().characters(0, 500, true)
+        )};
+        this.cookies = tempCookies;
+
+        this.body = faker.lorem().characters(0,5000,true);
+    }
+
+    private void createMockHttpServletRequestBuilder() {
+        this.mockHttpServletRequestBuilder = MockMvcRequestBuilders.request(this.getMethod(), URI.create(this.getUrl()));
+
+        mockHttpServletRequestBuilder.contentType(this.getContentType());
+        mockHttpServletRequestBuilder.accept(Helper.pickOne(Arrays.asList(MediaType.ALL_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE)));
+        getHeaders().forEach((key, val) -> mockHttpServletRequestBuilder.header(key, val));
+        getParams().forEach((key, val) -> mockHttpServletRequestBuilder.param(key, val));
+        mockHttpServletRequestBuilder.cookie(getCookies());
+        mockHttpServletRequestBuilder.content(this.getBody());
     }
 }

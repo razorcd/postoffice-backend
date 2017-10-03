@@ -1,27 +1,18 @@
 package com.postbox.Controller;
 
 import com.postbox.controler.BoxController;
-import com.postbox.factory.HttpServletRequestFactory;
-import org.junit.After;
+import com.postbox.factory.RequestDouble;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Commit;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.net.URI;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,11 +22,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BoxControllerTests {
 
+    //    TODO: @Value("{}")
+    private static String SERVICE_PATH = "/incoming/";
+
     @Autowired
     private BoxController boxController;
 
     private MockMvc mockMvc;
-
 
     @Before
     public void initMockMvc() {
@@ -45,51 +38,55 @@ public class BoxControllerTests {
 
     @Test
     public void testGetRecordRequest() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = HttpServletRequestFactory.generate();
+        RequestDouble requestDouble = new RequestDouble();
+        requestDouble.setUrl(SERVICE_PATH+requestDouble.getUrl());
+        requestDouble.setMethod("GET");
 
-       this.mockMvc.perform(requestBuilder)
-               .andExpect(content().string(requestBuilder.))
+        this.mockMvc.perform(requestDouble.getMockHttpServletRequestBuilder())
+               .andExpect(content().string(""))
                .andExpect(status().isNoContent());
     }
 
     @Test
     public void testPostRecordRequest() throws Exception {
-        this.mockMvc.perform(
-                    post(servicePath+"/any_path")
-                            .content("Some content string.")
-                            .contentType(MediaType.TEXT_PLAIN))
+        RequestDouble requestDouble = new RequestDouble();
+        requestDouble.setUrl(SERVICE_PATH+requestDouble.getUrl());
+        requestDouble.setMethod("POST");
+
+        this.mockMvc.perform(requestDouble.getMockHttpServletRequestBuilder())
                 .andExpect(content().string(""))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testPutRecordRequest() throws Exception {
-        this.mockMvc.perform(
-                    put(servicePath+"/any_path")
-                            .content("Some content string.")
-                            .contentType(MediaType.TEXT_PLAIN))
+        RequestDouble requestDouble = new RequestDouble();
+        requestDouble.setUrl(SERVICE_PATH+requestDouble.getUrl());
+        requestDouble.setMethod("PUT");
+
+        this.mockMvc.perform(requestDouble.getMockHttpServletRequestBuilder())
                 .andExpect(content().string(""))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testPatchRecordRequest() throws Exception {
-        this.mockMvc.perform(
-                    patch(servicePath+"/any_path")
-                            .content("Some content string.")
-                            .contentType(MediaType.TEXT_PLAIN))
+        RequestDouble requestDouble = new RequestDouble();
+        requestDouble.setUrl(SERVICE_PATH+requestDouble.getUrl());
+        requestDouble.setMethod("PATCH");
+
+        this.mockMvc.perform(requestDouble.getMockHttpServletRequestBuilder())
                 .andExpect(content().string(""))
                 .andExpect(status().isNoContent());
-        Thread.sleep(15000L);
-
     }
 
     @Test
     public void testDeleteRecordRequest() throws Exception {
-        this.mockMvc.perform(
-                    delete(servicePath+"/any_path")
-                            .content("Some content string.")
-                            .contentType(MediaType.TEXT_PLAIN))
+        RequestDouble requestDouble = new RequestDouble();
+        requestDouble.setUrl(SERVICE_PATH+requestDouble.getUrl());
+        requestDouble.setMethod("DELETE");
+
+        this.mockMvc.perform(requestDouble.getMockHttpServletRequestBuilder())
                 .andExpect(content().string(""))
                 .andExpect(status().isNoContent());
     }

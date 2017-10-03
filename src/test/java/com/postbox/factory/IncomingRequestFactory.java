@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class IncomingRequestFactory {
+    private static Faker FAKER = new Faker();
 
     public static IncomingRequest generate() {
         IncomingRequest incomingRequest = new IncomingRequest();

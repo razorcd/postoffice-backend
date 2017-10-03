@@ -60,4 +60,10 @@ public class HttpRequestDeserializer {
         }
         return body;
     }
+
+    public String getRemoteAddress(HttpServletRequest request) {
+        return request.getRemoteAddr();
+//        request.getRemoteHost();
+//        request.getRemotePort()
+    }
 }
