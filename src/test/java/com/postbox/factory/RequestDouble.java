@@ -27,7 +27,8 @@ public class RequestDouble {
     private MockHttpServletRequestBuilder mockHttpServletRequestBuilder;
 
     /**
-     * A wrapper class that generates a MockHttpServletRequestBuilder with random data but also allows access to all the generated properties for further Response testing.
+     * A wrapper object that generates a MockHttpServletRequestBuilder with random data
+     * but also allows access to all the generated properties for further data testing.
      */
     public RequestDouble() {
         generatePropertiesWithRandomData();
