@@ -1,6 +1,7 @@
 package com.postbox.Controller;
 
 import com.postbox.controler.BoxController;
+import com.postbox.factory.HttpServletRequestFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -34,21 +36,20 @@ public class BoxControllerTests {
 
     private MockMvc mockMvc;
 
-    private String servicePath = "/incoming";
 
     @Before
     public void initMockMvc() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(boxController).build();
 
-//        RequestBuilder request = MockMvcRequestBuilders.request(HttpMethod.GET, URI.create(servicePath+"/any_path"));
     }
 
     @Test
     public void testGetRecordRequest() throws Exception {
-        this.mockMvc.perform(
-                    get(servicePath+"/any_path"))
-                .andExpect(content().string(""))
-                .andExpect(status().isNoContent());
+        MockHttpServletRequestBuilder requestBuilder = HttpServletRequestFactory.generate();
+
+       this.mockMvc.perform(requestBuilder)
+               .andExpect(content().string(requestBuilder.))
+               .andExpect(status().isNoContent());
     }
 
     @Test
