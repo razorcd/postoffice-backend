@@ -108,7 +108,7 @@ public class RequestDouble {
         this.headers.put("header1", "value1");
 
         Cookie[] tempCookies = { new Cookie(
-                faker.lorem().characters(0, 500, true),
+                faker.lorem().characters(1, 500, true),
                 faker.lorem().characters(0, 500, true)
         )};
         this.cookies = tempCookies;
