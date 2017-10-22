@@ -43,12 +43,12 @@ public class HttpRequestMapper {
         incomingRequest.setHeaders(httpRequestDeserializer.getHeaders(request).toString());
         incomingRequest.setBody(httpRequestDeserializer.getBody(request));
 
-        incomingRequest.setCookies(servletCookieToCookieModel(request).toString());
+        incomingRequest.setCookies(servletCookieToCookieModel(request));
 
         return incomingRequest;
     }
 
-    private Optional<List<Cookie>> servletCookieToCookieModel(HttpServletRequest request) {
+    private List<Cookie> servletCookieToCookieModel(HttpServletRequest request) {
         AtomicReference<List<Cookie>> cookieList = new AtomicReference<>();
 
          Optional.ofNullable(httpRequestDeserializer.getCookies(request)).ifPresent( servletCookies -> {
@@ -69,6 +69,6 @@ public class HttpRequestMapper {
                     }).collect(Collectors.toList()));
         });
 
-         return Optional.ofNullable(cookieList.get());
+         return cookieList.get();
     }
 }

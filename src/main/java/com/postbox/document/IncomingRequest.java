@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class IncomingRequest {
 
@@ -25,7 +26,7 @@ public class IncomingRequest {
     private String headers;
 
     @Size(max=32744) // cookie max size is 4093 bytes
-    private String cookies;
+    private List<Cookie> cookies;
 
     @Size(max=16777216) //2MB
     private String body;
@@ -70,11 +71,11 @@ public class IncomingRequest {
         this.headers = headers;
     }
 
-    public String getCookies() {
+    public List<Cookie> getCookies() {
         return cookies;
     }
 
-    public void setCookies(String cookies) {
+    public void setCookies(List<Cookie> cookies) {
         this.cookies = cookies;
     }
 
