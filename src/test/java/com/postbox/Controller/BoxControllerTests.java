@@ -1,7 +1,7 @@
 package com.postbox.Controller;
 
 import com.postbox.controler.BoxController;
-import com.postbox.factory.RequestDouble;
+import com.postbox.factory.ServletRequestDouble;
 import com.postbox.document.IncomingRequest;
 import com.postbox.repository.IncomingRequestNoSqlRepository;
 import org.junit.Before;
@@ -54,21 +54,21 @@ public class BoxControllerTests {
 
     @Test
     public void testRecordRequest() throws Exception {
-        RequestDouble requestDouble = new RequestDouble();
-        requestDouble.setUrl(SERVICE_HOST+SERVICE_PATH+requestDouble.getUrl());
+        ServletRequestDouble servletRequestDouble = new ServletRequestDouble();
+        servletRequestDouble.setUrl(SERVICE_HOST+SERVICE_PATH+ servletRequestDouble.getUrl());
 
-        this.mockMvc.perform(requestDouble.getMockHttpServletRequestBuilder())
+        this.mockMvc.perform(servletRequestDouble.getMockHttpServletRequestBuilder())
                 .andExpect(content().string(""))
                 .andExpect(status().isNoContent());
 
         Optional<IncomingRequest> incomingRequest = incomingRequestNoSqlRepository.findAll().stream().findFirst();
         assertThat(incomingRequest.isPresent());
         assertThat(incomingRequest.get().getId()).isNotEmpty();
-        assertThat(incomingRequest.get().getUrl()).isEqualTo(requestDouble.getUrl());
-        assertThat(incomingRequest.get().getMethod()).isEqualTo(requestDouble.getMethod());
-//        assertThat(incomingRequest.get().getParams()).isEqualTo(requestDouble.getParams());
-//        assertThat(incomingRequest.get().getHeaders()).isEqualTo(requestDouble.getHeaders());
-//        assertThat(incomingRequest.get().getCookies()).isEqualTo(requestDouble.getCookies());
-        assertThat(incomingRequest.get().getBody()).isEqualTo(requestDouble.getBody());
+        assertThat(incomingRequest.get().getUrl()).isEqualTo(servletRequestDouble.getUrl());
+        assertThat(incomingRequest.get().getMethod()).isEqualTo(servletRequestDouble.getMethod());
+//        assertThat(incomingRequest.get().getParams()).isEqualTo(servletRequestDouble.getParams());
+//        assertThat(incomingRequest.get().getHeaders()).isEqualTo(servletRequestDouble.getHeaders());
+//        assertThat(incomingRequest.get().getCookies()).isEqualTo(servletRequestDouble.getCookies());
+        assertThat(incomingRequest.get().getBody()).isEqualTo(servletRequestDouble.getBody());
     }
 }

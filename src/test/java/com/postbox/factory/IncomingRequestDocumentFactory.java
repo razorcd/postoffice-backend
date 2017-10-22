@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class IncomingRequestFactory {
+public class IncomingRequestDocumentFactory {
     private static Faker FAKER = new Faker();
 
     public static IncomingRequest generateIncomingRequest() {

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestDouble {
+public class ServletRequestDouble {
 
     private Faker faker = new Faker();
 
@@ -30,7 +30,7 @@ public class RequestDouble {
      * A wrapper object that generates a MockHttpServletRequestBuilder with random data
      * but also allows access to all the generated properties for further data testing.
      */
-    public RequestDouble() {
+    public ServletRequestDouble() {
         generatePropertiesWithRandomData();
     }
 
