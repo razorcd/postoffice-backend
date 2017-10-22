@@ -1,9 +1,8 @@
 package com.postbox.controler;
 
 import com.postbox.controler.deserializer.CookieDeserielizer;
-import com.postbox.controler.dto.RequestDto;
 import com.postbox.controler.mapper.HttpRequestMapper;
-import com.postbox.model.IncomingRequest;
+import com.postbox.document.IncomingRequest;
 import com.postbox.service.IncomingRequestService;
 import com.postbox.controler.deserializer.HttpRequestDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

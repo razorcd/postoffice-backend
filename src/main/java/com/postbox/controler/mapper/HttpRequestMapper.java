@@ -2,8 +2,8 @@ package com.postbox.controler.mapper;
 
 import com.postbox.controler.deserializer.CookieDeserielizer;
 import com.postbox.controler.deserializer.HttpRequestDeserializer;
-import com.postbox.model.Cookie;
-import com.postbox.model.IncomingRequest;
+import com.postbox.document.Cookie;
+import com.postbox.document.IncomingRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;

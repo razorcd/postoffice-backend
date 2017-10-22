@@ -1,10 +1,7 @@
 package com.postbox.factory;
 
 import com.github.javafaker.Faker;
-import com.postbox.model.IncomingRequest;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.postbox.document.IncomingRequest;
 
 public class IncomingRequestFactory {
     private static Faker FAKER = new Faker();

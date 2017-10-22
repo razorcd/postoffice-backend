@@ -1,4 +1,4 @@
-package com.postbox.model;
+package com.postbox.document;
 
 public class Cookie {
     private String name;

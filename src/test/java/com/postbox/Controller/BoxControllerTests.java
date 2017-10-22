@@ -2,8 +2,8 @@ package com.postbox.Controller;
 
 import com.postbox.controler.BoxController;
 import com.postbox.factory.RequestDouble;
-import com.postbox.model.IncomingRequest;
-import com.postbox.repository.IncomingRequestRepository;
+import com.postbox.document.IncomingRequest;
+import com.postbox.repository.IncomingRequestNoSqlRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,13 +38,18 @@ public class BoxControllerTests {
     private BoxController boxController;
 
     @Autowired
-    private IncomingRequestRepository incomingRequestRepository;
+    private IncomingRequestNoSqlRepository incomingRequestNoSqlRepository;
 
     private MockMvc mockMvc;
 
     @Before
     public void initMockMvc() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(boxController).build();
+    }
+
+    @Before
+    public void before() {
+        incomingRequestNoSqlRepository.deleteAll();
     }
 
     @Test
@@ -56,9 +61,9 @@ public class BoxControllerTests {
                 .andExpect(content().string(""))
                 .andExpect(status().isNoContent());
 
-        Optional<IncomingRequest> incomingRequest = incomingRequestRepository.findAll().stream().findFirst();
+        Optional<IncomingRequest> incomingRequest = incomingRequestNoSqlRepository.findAll().stream().findFirst();
         assertThat(incomingRequest.isPresent());
-        assertThat(incomingRequest.get().getId()).isEqualTo(1);
+        assertThat(incomingRequest.get().getId()).isNotEmpty();
         assertThat(incomingRequest.get().getUrl()).isEqualTo(requestDouble.getUrl());
         assertThat(incomingRequest.get().getMethod()).isEqualTo(requestDouble.getMethod());
 //        assertThat(incomingRequest.get().getParams()).isEqualTo(requestDouble.getParams());

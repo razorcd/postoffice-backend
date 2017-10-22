@@ -1,6 +1,6 @@
 package com.postbox.service;
 
-import com.postbox.model.IncomingRequest;
+import com.postbox.document.IncomingRequest;
 
 import java.util.List;
 

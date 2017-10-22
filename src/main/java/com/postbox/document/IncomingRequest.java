@@ -1,48 +1,40 @@
-package com.postbox.model;
+package com.postbox.document;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "incoming_requests")
 public class IncomingRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String id;
 
-    @Lob
     @NotNull
     @Size(max=16664) // max 2083 characters
     private String url;
 
     @NotNull
-    @Column(length = 16)
     @Size(max=16)
     private String method;
 
-    @Lob
     @Size(max=65535)
     private String params;
 
-    @Lob
     @Size(max=65535)
     private String headers;
 
-    @Lob
     @Size(max=32744) // cookie max size is 4093 bytes
     private String cookies;
 
-    @Lob
     @Size(max=16777216) //2MB
     private String body;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
