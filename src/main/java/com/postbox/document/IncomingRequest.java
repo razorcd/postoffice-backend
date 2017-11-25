@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Map;
 
 public class IncomingRequest {
 
@@ -20,10 +21,10 @@ public class IncomingRequest {
     private String method;
 
     @Size(max=65535)
-    private String params;
+    private Map<String, String[]> params;
 
     @Size(max=65535)
-    private String headers;
+    private Map<String, String> headers;
 
     @Size(max=32744) // cookie max size is 4093 bytes
     private List<Cookie> cookies;
@@ -55,19 +56,19 @@ public class IncomingRequest {
         this.method = method;
     }
 
-    public String getParams() {
+    public Map<String, String[]> getParams() {
         return params;
     }
 
-    public void setParams(String params) {
+    public void setParams(Map<String, String[]> params) {
         this.params = params;
     }
 
-    public String getHeaders() {
+    public Map<String, String> getHeaders() {
         return headers;
     }
 
-    public void setHeaders(String headers) {
+    public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
     }
 

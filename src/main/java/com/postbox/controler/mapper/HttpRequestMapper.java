@@ -39,8 +39,8 @@ public class HttpRequestMapper {
 
         incomingRequest.setUrl(httpRequestDeserializer.getUrl(request));
         incomingRequest.setMethod(httpRequestDeserializer.getMethod(request));
-        incomingRequest.setParams(httpRequestDeserializer.getParams(request).toString());
-        incomingRequest.setHeaders(httpRequestDeserializer.getHeaders(request).toString());
+        incomingRequest.setParams(httpRequestDeserializer.getParams(request));
+        incomingRequest.setHeaders(httpRequestDeserializer.getHeaders(request));
         incomingRequest.setBody(httpRequestDeserializer.getBody(request));
 
         incomingRequest.setCookies(servletCookieToCookieModel(request));

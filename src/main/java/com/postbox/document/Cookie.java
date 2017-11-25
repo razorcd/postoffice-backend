@@ -1,7 +1,13 @@
 package com.postbox.document;
 
+import javax.validation.constraints.NotNull;
+
 public class Cookie {
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String value;
 
     private int version;
@@ -9,12 +15,23 @@ public class Cookie {
     //
     // Attributes encoded in the header's cookie fields.
     //
-    private String comment; // ;Comment=VALUE ... describes cookie's use
+
+    @NotNull
     private String domain; // ;Domain=VALUE ... domain that sees cookie
+
+    @NotNull
     private int maxAge = -1; // ;Max-Age=VALUE ... cookies auto-expire
+
+    @NotNull
     private String path; // ;Path=VALUE ... URLs that see the cookie
-    private boolean secure; // ;Secure ... e.g. use SSL
+
+    @NotNull
     private boolean httpOnly; // Not in cookie specs, but supported by browsers
+
+    private boolean secure; // ;Secure ... e.g. use SSL
+
+    private String comment; // ;Comment=VALUE ... describes cookie's use
+
 
     public String getName() {
         return name;
@@ -38,14 +55,6 @@ public class Cookie {
 
     public void setVersion(int version) {
         this.version = version;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public String getDomain() {
@@ -72,6 +81,14 @@ public class Cookie {
         this.path = path;
     }
 
+    public boolean isHttpOnly() {
+        return httpOnly;
+    }
+
+    public void setHttpOnly(boolean httpOnly) {
+        this.httpOnly = httpOnly;
+    }
+
     public boolean isSecure() {
         return secure;
     }
@@ -80,11 +97,11 @@ public class Cookie {
         this.secure = secure;
     }
 
-    public boolean isHttpOnly() {
-        return httpOnly;
+    public String getComment() {
+        return comment;
     }
 
-    public void setHttpOnly(boolean httpOnly) {
-        this.httpOnly = httpOnly;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

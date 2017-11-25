@@ -5,7 +5,9 @@ import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class IncomingRequestDocumentFactory {
@@ -16,8 +18,17 @@ public class IncomingRequestDocumentFactory {
 
         incomingRequest.setUrl(FAKER.internet().url());
         incomingRequest.setMethod(FAKER.lorem().characters(2, 16, true));
-        incomingRequest.setParams("{param1=1;param2=2}");
-        incomingRequest.setHeaders("{header1=1;header2}");
+
+        Map<String, String[]> params = new HashMap<>();
+        params.put("param1", new String[]{"p1"} );
+        params.put("param2", new String[]{"p1", "p2", "p3"} );
+        incomingRequest.setParams(params);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("header1", "hv1");
+        headers.put("header2", "hv2");
+        incomingRequest.setHeaders(headers);
+
         incomingRequest.setCookies(generateCookieList());
         incomingRequest.setBody(FAKER.lorem().paragraph());
 
