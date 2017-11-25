@@ -101,16 +101,27 @@ public class ServletRequestDouble {
         this.contentType = Helper.pickOne(Arrays.asList(MediaType.ALL_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE));
 
         this.params = new HashMap<String, String[]>();
-        String[] paramValue = {"value1"};
-        this.params.put("param1", paramValue);
+        this.params.put(
+                faker.lorem().characters(1, 500, true),
+                new String[]{faker.lorem().characters(1, 500, true)});
+        this.params.put(
+                faker.lorem().characters(1, 500, true),
+                new String[]{
+                        faker.lorem().characters(1, 500, true),
+                        faker.lorem().characters(1, 500, true)});
 
         this.headers = new HashMap<String, String>();
-        this.headers.put("header1", "value1");
+        this.headers.put(faker.lorem().characters(1, 500, true),
+                faker.lorem().characters(1, 500, true));
 
         Cookie[] tempCookies = { new Cookie(
-                faker.lorem().characters(1, 500, true),
-                faker.lorem().characters(0, 500, true)
-        )};
+                    faker.lorem().characters(1, 500, true),
+                    faker.lorem().characters(0, 500, true)
+                ),
+                new Cookie(
+                    faker.lorem().characters(1, 500, true),
+                    faker.lorem().characters(0, 500, true)
+                )};
         this.cookies = tempCookies;
 
         this.body = faker.lorem().characters(0,5000,true);
