@@ -1,8 +1,8 @@
-package com.postbox.document;
+package com.postbox.controler.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class Cookie {
+public class CookieDto {
 
     @NotNull
     private String name;

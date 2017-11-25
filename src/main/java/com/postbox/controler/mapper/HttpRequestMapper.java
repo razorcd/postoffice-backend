@@ -51,23 +51,22 @@ public class HttpRequestMapper {
     private List<Cookie> servletCookieToCookieModel(HttpServletRequest request) {
         AtomicReference<List<Cookie>> cookieList = new AtomicReference<>();
 
-         Optional.ofNullable(httpRequestDeserializer.getCookies(request)).ifPresent( servletCookies -> {
-             cookieList.set(Arrays.stream(servletCookies).map(servletCookie -> {
-                        Cookie cookie = new Cookie();
+         Optional.ofNullable(httpRequestDeserializer.getCookies(request)).ifPresent( servletCookies ->
+                cookieList.set(Arrays.stream(servletCookies).map(servletCookie -> {
+                    Cookie cookie = new Cookie();
 
-                        cookie.setName(cookieDeserielizer.getName(servletCookie));
-                        cookie.setName(cookieDeserielizer.getValue(servletCookie));
-                        cookie.setVersion(cookieDeserielizer.getVersion(servletCookie));
-                        cookie.setComment(cookieDeserielizer.getComment(servletCookie));
-                        cookie.setDomain(cookieDeserielizer.getDomain(servletCookie));
-                        cookie.setMaxAge(cookieDeserielizer.getMaxAge(servletCookie));
-                        cookie.setPath(cookieDeserielizer.getPath(servletCookie));
-                        cookie.setSecure(cookieDeserielizer.isSecure(servletCookie));
-                        cookie.setHttpOnly(cookieDeserielizer.isHttpOnly(servletCookie));
+                    cookie.setName(cookieDeserielizer.getName(servletCookie));
+                    cookie.setName(cookieDeserielizer.getValue(servletCookie));
+                    cookie.setVersion(cookieDeserielizer.getVersion(servletCookie));
+                    cookie.setComment(cookieDeserielizer.getComment(servletCookie));
+                    cookie.setDomain(cookieDeserielizer.getDomain(servletCookie));
+                    cookie.setMaxAge(cookieDeserielizer.getMaxAge(servletCookie));
+                    cookie.setPath(cookieDeserielizer.getPath(servletCookie));
+                    cookie.setSecure(cookieDeserielizer.isSecure(servletCookie));
+                    cookie.setHttpOnly(cookieDeserielizer.isHttpOnly(servletCookie));
 
-                        return cookie;
-                    }).collect(Collectors.toList()));
-        });
+                    return cookie;
+                }).collect(Collectors.toList())));
 
          return cookieList.get();
     }

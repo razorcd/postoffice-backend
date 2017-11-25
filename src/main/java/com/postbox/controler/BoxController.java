@@ -1,7 +1,9 @@
 package com.postbox.controler;
 
 import com.postbox.controler.deserializer.CookieDeserielizer;
+import com.postbox.controler.dto.IncomingRequestDto;
 import com.postbox.controler.mapper.HttpRequestMapper;
+import com.postbox.controler.mapper.IncomingRequestMapper;
 import com.postbox.document.IncomingRequest;
 import com.postbox.service.IncomingRequestService;
 import com.postbox.controler.deserializer.HttpRequestDeserializer;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BoxController {
@@ -42,15 +45,19 @@ public class BoxController {
      */
     @CrossOrigin(origins = "*", maxAge = 3600)
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
-    public @ResponseBody List<IncomingRequest> getRequests() {
-        return incomingRequestServiceImpl.getAll();
+    public @ResponseBody List<IncomingRequestDto> getRequests() {
+        List<IncomingRequest> incomingRequests = incomingRequestServiceImpl.getAll();
+        List<IncomingRequestDto> incomingRequestDtos = incomingRequests.stream().
+                map(incomingRequest -> IncomingRequestMapper.incomingRequestToDto(incomingRequest)).
+                collect(Collectors.toList());
+        return incomingRequestDtos;
     }
 
     /**
      * Endpoint to listen to any tipe of HTTP request.
      *
      * @param request the request object from the servlet
-     * @param response the response object from the servlet
+    * @param response the response object from the servlet
      * @return empty response with status 204
      */
     @RequestMapping(value = "/incoming/**")
@@ -61,8 +68,8 @@ public class BoxController {
         incomingRequestServiceImpl.save(incomingRequest);
 
 
+//        JavaObjectSerializer.write(request, response);
 
-        JavaObjectSerializer.write(request, response);
 //        response.reset();
 //        response.setStatus(HttpStatus.NO_CONTENT.value());
 
