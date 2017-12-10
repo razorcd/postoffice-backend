@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +27,9 @@ public class IncomingRequest {
     @Size(max=65535)
     private Map<String, String> headers;
 
+    @NotNull
     @Size(max=32744) // cookie max size is 4093 bytes
-    private List<Cookie> cookies;
+    private List<Cookie> cookies = new ArrayList<>();
 
     @Size(max=16777216) //2MB
     private String body;
