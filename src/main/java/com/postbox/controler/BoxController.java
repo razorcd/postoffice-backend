@@ -50,14 +50,6 @@ public class BoxController {
         List<IncomingRequestDto> incomingRequestDtos = incomingRequests.stream().
                 map(incomingRequest -> IncomingRequestMapper.incomingRequestToDto(incomingRequest)).
                 collect(Collectors.toList());
-
-        incomingRequests.get(0).setId("0");
-        incomingRequests.get(0).getHeaders().replace("Accept", "xxx");
-        incomingRequests.get(0).getParams().
-                replace("U91PZtp2BF3hh7OsO1n0eOFCrEm8gT8AgtoG8b540zIQ8RIk0HKLBcwDE7bq6CJi59o6X23wpD2HLn9zmDz7bSYK9OeaR6m8elxhLg261m3Q2kt0G26KmDUduTmO7KZ8l6FvGb2uWBe5akb", new String[]{"11","22"});
-        incomingRequests.get(0).getParams().
-                get("N05US82SqUPwEZ2eIUvLCcR85Ww12cG86lvtiYBDbpjTZ0cfC0IeZL2d20tk5sCpcXUs63T4ZQ8m33hSlms4sq2chcJguZ37nwk0duURT3hPdufRRZeVs9iOMa4dtX7fp6fyaXczigrHi4lrOvLb64eXhOu0aYbfx4PLwoqtCj9eCG3kVecoyDInIT436zJ0vk8t9POow57COW1a0CJMJQIr21203qr3R836KpIs3Bt7JOzHbT6IWauFj0WmJ98Z1bQoDxDHv7f4wEx5k1dJqp6SzE65lvGSTX2b1ZzR6JH9mF8QVdc4qZjz1Jg5D8D1vmHf6XuuFi7cvOZLDO4RPs4NLrqQU4HpGm456mxq28Y8ej9D017J9508NF1Ozve92XG7RYrGb1Ow7uSDiq7wgg9m7ISod")
-                [0]="00000";
         return incomingRequestDtos;
     }
 
