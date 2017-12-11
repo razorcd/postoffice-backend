@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,7 @@ public class BoxController {
         List<IncomingRequestDto> incomingRequestDtos = incomingRequests.stream().
                 map(incomingRequest -> IncomingRequestMapper.incomingRequestToDto(incomingRequest)).
                 collect(Collectors.toList());
+        Collections.reverse(incomingRequestDtos);
         return incomingRequestDtos;
     }
 
