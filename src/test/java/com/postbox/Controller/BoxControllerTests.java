@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,6 +58,7 @@ public class BoxControllerTests {
 
     @Test
     public void testRecordRequest() throws Exception {
+        Date startTime = new Date();
         ServletRequestDouble servletRequestDouble = new ServletRequestDouble();
         servletRequestDouble.setUrl(SERVICE_HOST+SERVICE_PATH+ servletRequestDouble.getUrl());
 
@@ -73,5 +75,6 @@ public class BoxControllerTests {
 //        assertThat(incomingRequest.get().getHeaders()).isEqualTo(servletRequestDouble.getHeaders());
 //        assertThat(incomingRequest.get().getCookies()).isEqualTo(servletRequestDouble.getCookies());
         assertThat(incomingRequest.get().getBody()).isEqualTo(servletRequestDouble.getBody());
+        assertThat(incomingRequest.get().getTimestamp()).isBetween(startTime, new Date());
     }
 }

@@ -5,7 +5,6 @@ import com.postbox.controler.dto.IncomingRequestDto;
 import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
 
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,6 +20,7 @@ public class IncomingRequestMapper {
         incomingRequestDto.setHeaders(headersToMap(incomingRequest));
         incomingRequestDto.setMethod(incomingRequest.getMethod());
         incomingRequestDto.setCookies(incomingRequest.getCookies().stream().map(cookie -> IncomingRequestMapper.cookieToDto(cookie)).collect(Collectors.toList()));
+        incomingRequestDto.setTimestamp(incomingRequest.getTimestamp());
         return incomingRequestDto;
     }
 

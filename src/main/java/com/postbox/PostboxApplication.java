@@ -8,6 +8,5 @@ public class PostboxApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PostboxApplication.class, args);
-					String s = "";
 	}
 }

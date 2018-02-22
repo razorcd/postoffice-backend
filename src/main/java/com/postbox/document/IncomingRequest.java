@@ -1,13 +1,17 @@
 package com.postbox.document;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Document
 public class IncomingRequest {
 
     @Id
@@ -33,6 +37,9 @@ public class IncomingRequest {
 
     @Size(max=16777216) //2MB
     private String body;
+
+
+    private Date timestamp;
 
     public String getId() {
         return id;
@@ -88,5 +95,13 @@ public class IncomingRequest {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
     }
 }

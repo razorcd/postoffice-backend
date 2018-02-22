@@ -9,12 +9,15 @@ import java.io.FileInputStream;
         import java.io.ObjectInputStream;
         import java.io.ObjectOutputStream;
 
+/**
+ * Binary dump of an object.
+ */
+//TODO: wip
 public class JavaObjectSerializer {
 
     public static void write(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-
             String a = new String("a");
 
             // write object to file

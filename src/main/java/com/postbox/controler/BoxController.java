@@ -1,12 +1,12 @@
 package com.postbox.controler;
 
 import com.postbox.controler.deserializer.CookieDeserielizer;
+import com.postbox.controler.deserializer.HttpRequestDeserializer;
 import com.postbox.controler.dto.IncomingRequestDto;
 import com.postbox.controler.mapper.HttpRequestMapper;
 import com.postbox.controler.mapper.IncomingRequestMapper;
 import com.postbox.document.IncomingRequest;
 import com.postbox.service.IncomingRequestService;
-import com.postbox.controler.deserializer.HttpRequestDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +56,7 @@ public class BoxController {
     }
 
     /**
-     * Endpoint to listen to any tipe of HTTP request.
+     * Endpoint to listen to any type of HTTP request.
      *
      * @param request the request object from the servlet
     * @param response the response object from the servlet
@@ -65,7 +65,7 @@ public class BoxController {
     @RequestMapping(value = "/incoming/**")
     public ResponseEntity recordRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        //TODO: move this to a servlet parser
+        //TODO: move this to a servlet filter?
         IncomingRequest incomingRequest = new HttpRequestMapper(httpRequestDeserializer, cookieDeserielizer).httpServletRequestToIncomingRequestModel(request);
         incomingRequestServiceImpl.save(incomingRequest);
 

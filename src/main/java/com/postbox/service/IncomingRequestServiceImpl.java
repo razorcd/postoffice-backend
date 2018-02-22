@@ -5,6 +5,7 @@ import com.postbox.repository.IncomingRequestNoSqlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +23,7 @@ public class IncomingRequestServiceImpl implements IncomingRequestService {
     }
 
     public void save(IncomingRequest incomingRequest) {
+        incomingRequest.setTimestamp(new Date());
         incomingRequestNoSqlRepository.save(incomingRequest);
     }
 }
