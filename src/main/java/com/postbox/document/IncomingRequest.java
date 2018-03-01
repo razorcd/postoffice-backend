@@ -1,15 +1,11 @@
 package com.postbox.document;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Document
 public class IncomingRequest {
@@ -104,4 +100,42 @@ public class IncomingRequest {
     public Date getTimestamp() {
         return timestamp;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IncomingRequest that = (IncomingRequest) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(method, that.method) &&
+                Objects.equals(params, that.params) &&
+                Objects.equals(headers, that.headers) &&
+                Objects.equals(cookies, that.cookies) &&
+                Objects.equals(body, that.body) &&
+                Objects.equals(timestamp, that.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, url, method, params, headers, cookies, body, timestamp);
+    }
+
+    @Override
+    public String toString() {
+        return "IncomingRequest{" +
+                "id='" + id + '\'' +
+                ", url='" + url + '\'' +
+                ", method='" + method + '\'' +
+                ", params=" + params +
+                ", headers=" + headers +
+                ", cookies=" + cookies +
+                ", body='" + body + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
+
+
 }

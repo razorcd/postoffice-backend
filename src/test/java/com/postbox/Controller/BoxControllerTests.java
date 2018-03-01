@@ -41,9 +41,6 @@ public class BoxControllerTests {
     @Autowired
     private IncomingRequestNoSqlRepository incomingRequestNoSqlRepository;
 
-
-
-
     private MockMvc mockMvc;
 
     @Before
@@ -60,7 +57,7 @@ public class BoxControllerTests {
     public void testRecordRequest() throws Exception {
         Date startTime = new Date();
         ServletRequestDouble servletRequestDouble = new ServletRequestDouble();
-        servletRequestDouble.setUrl(SERVICE_HOST+SERVICE_PATH+ servletRequestDouble.getUrl());
+        servletRequestDouble.setUrl(SERVICE_HOST+SERVICE_PATH+servletRequestDouble.getUrl());
 
         this.mockMvc.perform(servletRequestDouble.getMockHttpServletRequestBuilder())
                 .andExpect(content().string(""))

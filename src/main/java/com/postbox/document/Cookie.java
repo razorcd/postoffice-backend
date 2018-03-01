@@ -1,6 +1,7 @@
 package com.postbox.document;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class Cookie {
 
@@ -99,5 +100,43 @@ public class Cookie {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cookie cookie = (Cookie) o;
+        return version == cookie.version &&
+                maxAge == cookie.maxAge &&
+                httpOnly == cookie.httpOnly &&
+                secure == cookie.secure &&
+                Objects.equals(name, cookie.name) &&
+                Objects.equals(value, cookie.value) &&
+                Objects.equals(domain, cookie.domain) &&
+                Objects.equals(path, cookie.path) &&
+                Objects.equals(comment, cookie.comment);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, value, version, domain, maxAge, path, httpOnly, secure, comment);
+    }
+
+    @Override
+    public String toString() {
+        return "Cookie{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", version=" + version +
+                ", domain='" + domain + '\'' +
+                ", maxAge=" + maxAge +
+                ", path='" + path + '\'' +
+                ", httpOnly=" + httpOnly +
+                ", secure=" + secure +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

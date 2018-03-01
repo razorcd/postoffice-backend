@@ -40,9 +40,9 @@ public class BoxController {
     }
 
     /**
-     * Endpoint to retrieve the entire request history
+     * Endpoint to retrieve the request history
      *
-      * @return list of all old requests
+     * @return list of all old requests
      */
     @CrossOrigin(origins = "*", maxAge = 3600)
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
@@ -56,10 +56,10 @@ public class BoxController {
     }
 
     /**
-     * Endpoint to listen to any type of HTTP request.
+     * Endpoint to send any type of HTTP request.
      *
      * @param request the request object from the servlet
-    * @param response the response object from the servlet
+     * @param response the response object from the servlet
      * @return empty response with status 204
      */
     @RequestMapping(value = "/incoming/**")
