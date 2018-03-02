@@ -17,3 +17,18 @@
 #endpoints.cors.allowed-origins= # Comma-separated list of origins to allow. '*' allows all origins. When not set, CORS support is disabled.
 #endpoints.cors.exposed-headers= # Comma-separated list of headers to include in a response.
 #endpoints.cors.max-age=1800 # How long, in seconds, the response from a pre-flight request can be cached by clients.
+
+
+
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+spring:
+  data:
+    mongodb:
+      database: postbox
+  session:
+    store-type: none
+#    mongo:
+#      collection-name: sessionzzz
+#debug: true

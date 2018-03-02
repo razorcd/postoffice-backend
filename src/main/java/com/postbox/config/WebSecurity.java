@@ -3,38 +3,62 @@ package com.postbox.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableWebSecurity
+//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
     @Autowired
+    CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    @Autowired
+    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    @Autowired
+    CustomLogoutSuccessHandler customLogoutSuccessHandler;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/requests", "/incoming/**", "/users").permitAll()
-                .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
-                .and()
-                .authorizeRequests().anyRequest().authenticated()
+        http
+            .authorizeRequests()
+                .antMatchers( "/incoming/**", "/users").permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .exceptionHandling()
+                    .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), new AntPathRequestMatcher("/**"))
+            .and()
+                .logout().logoutUrl("/logout")
+                         .clearAuthentication(true)
+                         .logoutSuccessHandler(customLogoutSuccessHandler)
+                         .permitAll()
+            .and()
+                .formLogin().loginProcessingUrl("/login")
+                            .successHandler(customAuthenticationSuccessHandler)
+                            .failureHandler(customAuthenticationFailureHandler)
+                            .permitAll()
+            .and()
+                .rememberMe().alwaysRemember(true).useSecureCookie(false).userDetailsService(customUserDetailsService)
+            .and()
+                .httpBasic().disable()
+                .csrf()
+                    .disable()
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //                .and()
-//                .formLogin()
-                .and()
-                .httpBasic()
-                .and()
-                .csrf().disable()
-                .cors().disable()
-                ;
+                .cors()
+//                    .disable()
+            ;
     }
 
     @Override
@@ -49,4 +73,5 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(passwordEncoder);
         return authenticationProvider;
     }
+
 }

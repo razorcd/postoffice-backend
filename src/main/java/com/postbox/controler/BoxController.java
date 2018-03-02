@@ -3,18 +3,17 @@ package com.postbox.controler;
 import com.postbox.controler.deserializer.CookieDeserielizer;
 import com.postbox.controler.deserializer.HttpRequestDeserializer;
 import com.postbox.controler.dto.IncomingRequestDto;
+import com.postbox.controler.dto.param.UserParam;
 import com.postbox.controler.mapper.HttpRequestMapper;
 import com.postbox.controler.mapper.IncomingRequestMapper;
 import com.postbox.document.IncomingRequest;
 import com.postbox.service.IncomingRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,4 +99,5 @@ public class BoxController {
     public String getPrivate() {
         return "private";
     }
+
 }
