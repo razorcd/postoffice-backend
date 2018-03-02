@@ -6,11 +6,18 @@ import com.postbox.repository.UserNoSqlRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserServiceImplTests {
@@ -20,9 +27,12 @@ public class UserServiceImplTests {
     @MockBean
     UserNoSqlRepository userNoSqlRepositoryMock;
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
     @Before
     public void init() {
-        subject = new UserServiceImpl(userNoSqlRepositoryMock);
+        subject = new UserServiceImpl(userNoSqlRepositoryMock, passwordEncoder);
     }
 
     @Before
@@ -32,11 +42,13 @@ public class UserServiceImplTests {
 
     @Test
     public void testSave() {
-        User userDummy = UserDocumentFactory.generateUser();
+        subject.create("myCustomUsername1", "myCustomPassword1");
 
-        subject.create(userDummy.getUsername(), userDummy.getEncryptedPassword());
+        ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
+        verify(userNoSqlRepositoryMock, times(1)).save(argument.capture());
 
-        verify(userNoSqlRepositoryMock, times(1)).save(userDummy);
+        assertEquals("myCustomUsername1", argument.getValue().getUsername());
+        assertTrue(passwordEncoder.matches("myCustomPassword1", argument.getValue().getEncryptedPassword()));
     }
 
 }

@@ -22,7 +22,7 @@ public class UserDocumentFactory {
 
         User user = new User();
 
-        user.setUsername(FAKER.internet().emailAddress());
+        user.setUsername(FAKER.name().username());
         user.setEncryptedPassword(encryptedPassword);
 
         return user;

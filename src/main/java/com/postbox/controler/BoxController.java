@@ -94,4 +94,10 @@ public class BoxController {
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    @RequestMapping("/private")
+    @ResponseBody
+    public String getPrivate() {
+        return "private";
+    }
 }

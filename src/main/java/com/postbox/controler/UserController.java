@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -22,7 +24,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto create(@RequestBody  UserParam userParams) {
+    public UserDto create(@RequestBody @Valid UserParam userParams) {
         User user = userService.create(userParams.getUsername().trim(), userParams.getPlainPassword().trim());
         return UserMapper.userToDto(user);
     }

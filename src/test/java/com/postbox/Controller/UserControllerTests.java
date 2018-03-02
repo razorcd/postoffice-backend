@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -58,6 +59,9 @@ public class UserControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Before
     public void before() {
         userNoSqlRepository.deleteAll();
@@ -77,6 +81,6 @@ public class UserControllerTests {
         assertThat(userInDb.isPresent());
         assertThat(userInDb.get().getId()).isNotEmpty();
         assertThat(userInDb.get().getUsername()).isEqualTo(userDummy.getUsername());
-        assertThat(userInDb.get().getEncryptedPassword()).isEqualTo(userDummy.getEncryptedPassword());
+        assertThat(passwordEncoder.matches(userInDb.get().getEncryptedPassword(), "myPlainPassword"));
     }
 }

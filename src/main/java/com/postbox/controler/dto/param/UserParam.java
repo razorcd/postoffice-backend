@@ -3,15 +3,18 @@ package com.postbox.controler.dto.param;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class UserParam {
 
     @NotBlank
-    @Pattern(regexp = "[a-zA-Z0-9_-]")
+    @Size(min = 3, max = 20)
+    @Pattern(regexp = "[a-zA-Z0-9_\\-.]+")
     private String username;
 
     @NotBlank
-    @Pattern(regexp = "[^/s/t]")
+    @Size(min = 8, max = 256)
+    @Pattern(regexp = "[^\\s\t\n\r\\h\\v]+")
     private String plainPassword;
 
 
