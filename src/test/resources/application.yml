@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: postbox_test
+  session:
+    store-type: none

@@ -7,11 +7,15 @@ public class UserDto {
     @NotBlank
     private String username;
 
+    @NotBlank
+    private String email;
+
     public UserDto() {
     }
 
-    public UserDto(String username) {
+    public UserDto(String username, String email) {
         this.username = username;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -20,5 +24,13 @@ public class UserDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

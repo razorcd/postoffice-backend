@@ -9,4 +9,5 @@ public interface UserNoSqlRepository extends MongoRepository<User, Long> {
 //    public User save(User user);
 
     public User findByUsername(String username);
+    public User findByEmail(String email);
 }

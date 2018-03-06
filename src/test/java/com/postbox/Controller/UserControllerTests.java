@@ -1,15 +1,11 @@
 package com.postbox.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.postbox.controler.BoxController;
 import com.postbox.controler.UserController;
 import com.postbox.controler.dto.UserDto;
-import com.postbox.controler.dto.param.UserParam;
-import com.postbox.document.IncomingRequest;
+import com.postbox.controler.dto.param.CreateUserParam;
 import com.postbox.document.User;
-import com.postbox.factory.ServletRequestDouble;
 import com.postbox.factory.UserDocumentFactory;
-import com.postbox.repository.IncomingRequestNoSqlRepository;
 import com.postbox.repository.UserNoSqlRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,20 +60,41 @@ public class UserControllerTests {
         userNoSqlRepository.deleteAll();
     }
 
-    @Test
-    public void testCreateUser() throws Exception {
-        User userDummy = UserDocumentFactory.generateUser("myPlainPassword");
 
-        String userParamString = objectMapper.writeValueAsString(new UserParam(userDummy.getUsername(), "myPlainPassword"));
+    //TODO: add JUnit5 and nest these 2:
+    @Test
+    public void testCreateUserWithValidPassword() throws Exception {
+        User userDummy = UserDocumentFactory.generateUser("myPlainPassword");
+        CreateUserParam createUserParam = new CreateUserParam(userDummy.getUsername(), userDummy.getEmail(),
+                "myPlainPassword", "myPlainPassword");
+
+        String userParamString = objectMapper.writeValueAsString(createUserParam);
 
         this.mockMvc.perform(post(SERVICE_PATH).contentType(MediaType.APPLICATION_JSON).content(userParamString))
-                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername()))))
+                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername(), userDummy.getEmail()))))
                 .andExpect(status().isCreated());
 
         Optional<User> userInDb = userNoSqlRepository.findAll().stream().findFirst();
         assertThat(userInDb.isPresent());
         assertThat(userInDb.get().getId()).isNotEmpty();
         assertThat(userInDb.get().getUsername()).isEqualTo(userDummy.getUsername());
+        assertThat(userInDb.get().getEmail()).isEqualTo(userDummy.getEmail());
         assertThat(passwordEncoder.matches(userInDb.get().getEncryptedPassword(), "myPlainPassword"));
+    }
+
+    @Test
+    public void testCreateUserWithInvalidPassword() throws Exception {
+        User userDummy = UserDocumentFactory.generateUser("myPlainPassword");
+        CreateUserParam createUserParam = new CreateUserParam(userDummy.getUsername(), userDummy.getEmail(),
+                "myPlainPassword_1", "myPlainPassword_2");
+
+        String userParamString = objectMapper.writeValueAsString(createUserParam);
+
+        this.mockMvc.perform(post(SERVICE_PATH).contentType(MediaType.APPLICATION_JSON).content(userParamString))
+                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername(), userDummy.getEmail()))))
+                .andExpect(status().isBadRequest());
+
+        Optional<User> userInDb = userNoSqlRepository.findAll().stream().findFirst();
+        assertThat(userInDb.isPresent()).isFalse();
     }
 }

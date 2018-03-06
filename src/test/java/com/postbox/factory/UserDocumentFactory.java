@@ -6,24 +6,23 @@ import com.postbox.document.User;
 public class UserDocumentFactory {
 
     private static Faker FAKER = new Faker();
-//    private static Encoder encoder;
+//    private static Encoder encoder;  // TODO: inject password encoder
 
     public static User generateUser() {
-        String encryptedPassword = encodePasswod(FAKER.internet().password());
-        return createUserObject(encryptedPassword);
+        return createUserObject(FAKER.internet().password());
     }
 
     public static User generateUser(String password) {
-        String encryptedPassword = encodePasswod(password);
         return createUserObject(password);
     }
 
-    private static User createUserObject(String encryptedPassword) {
+    private static User createUserObject(String password) {
 
         User user = new User();
 
         user.setUsername(FAKER.name().username());
-        user.setEncryptedPassword(encryptedPassword);
+        user.setEmail(FAKER.internet().emailAddress());
+        user.setEncryptedPassword(encodePasswod(password));
 
         return user;
     }

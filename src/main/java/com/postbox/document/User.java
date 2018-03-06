@@ -11,13 +11,15 @@ public class User {
     @Id
     private String id;
     private String username;
+    private String email;
     private String encryptedPassword;
 
     public User() {
     }
 
-    public User(String username, String encryptedPassword) {
+    public User(String username, String email, String encryptedPassword) {
         this.username = username;
+        this.email = email;
         this.encryptedPassword = encryptedPassword;
     }
 
@@ -37,6 +39,14 @@ public class User {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getEncryptedPassword() {
         return encryptedPassword;
     }
@@ -52,13 +62,14 @@ public class User {
         User user = (User) o;
         return Objects.equals(id, user.id) &&
                 Objects.equals(username, user.username) &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(encryptedPassword, user.encryptedPassword);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username, encryptedPassword);
+        return Objects.hash(id, username, email, encryptedPassword);
     }
 
     @Override
@@ -66,6 +77,7 @@ public class User {
         return "User{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", encryptedPassword='" + encryptedPassword + '\'' +
                 '}';
     }

@@ -29,7 +29,6 @@ public class UserServiceImplTests {
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     @Before
     public void init() {
         subject = new UserServiceImpl(userNoSqlRepositoryMock, passwordEncoder);
@@ -41,13 +40,15 @@ public class UserServiceImplTests {
     }  // TODO: investigate
 
     @Test
-    public void testSave() {
-        subject.create("myCustomUsername1", "myCustomPassword1");
+    public void testCreate() {
+        User newUser = new User("myCustomUsername1", "myCustomEmail1", null);
+        subject.create(newUser, "myCustomPassword1");
 
         ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
         verify(userNoSqlRepositoryMock, times(1)).save(argument.capture());
 
         assertEquals("myCustomUsername1", argument.getValue().getUsername());
+        assertEquals("myCustomEmail1", argument.getValue().getEmail());
         assertTrue(passwordEncoder.matches("myCustomPassword1", argument.getValue().getEncryptedPassword()));
     }
 

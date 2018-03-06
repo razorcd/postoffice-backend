@@ -1,6 +1,5 @@
 package com.postbox.config;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setStatus(HttpStatus.OK.value());
+        response.setStatus(HttpServletResponse.SC_OK);
         clearAuthenticationAttributes(request);
     }
 }

@@ -40,7 +40,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*")
-                .allowCredentials(true);
+                        .allowedMethods("HEAD", "GET", "POST", "PATCH", "PUT", "DELETE") // PATCH not enabled by default
+                        .allowCredentials(true);
             }
         };
     }

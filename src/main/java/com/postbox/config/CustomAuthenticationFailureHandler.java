@@ -1,7 +1,5 @@
 package com.postbox.config;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -16,7 +14,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
 }
