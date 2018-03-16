@@ -26,5 +26,5 @@ Includes:
 - [ ] separate props by env
 - [ ] add lombok
 - [x] add java docs
-- [ ] add tests coverage
+- [x] add tests coverage
 - [ ] Swager to define API
