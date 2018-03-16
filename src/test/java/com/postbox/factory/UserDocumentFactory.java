@@ -1,12 +1,13 @@
 package com.postbox.factory;
 
 import com.github.javafaker.Faker;
+import com.postbox.config.security.PasswordEncoderProvider;
 import com.postbox.document.User;
 
 public class UserDocumentFactory {
 
     private static Faker FAKER = new Faker();
-//    private static Encoder encoder;  // TODO: inject password encoder
+    private static PasswordEncoderProvider encoder = new PasswordEncoderProvider();
 
     public static User generateUser() {
         return createUserObject();
@@ -22,7 +23,7 @@ public class UserDocumentFactory {
         User user = createUserObject();
         user.setUsername(username);
         user.generatePathIdentifier();
-        user.setEncryptedPassword(password);
+        user.setEncryptedPassword(encodePasswod(password));
         return user;
     }
 
@@ -36,8 +37,7 @@ public class UserDocumentFactory {
     }
 
     private static String encodePasswod(String password) {
-//        return encoder.encode(password);
-        return password;
+        return encoder.passwordEncoder().encode(password);
     }
 
 }

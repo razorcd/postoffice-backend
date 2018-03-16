@@ -42,9 +42,6 @@ public class UserControllerTests {
     private static String SERVICE_PATH = "/users";
 
     @Autowired
-    private UserController userController;
-
-    @Autowired
     private UserNoSqlRepository userNoSqlRepository;
 
     @Autowired
