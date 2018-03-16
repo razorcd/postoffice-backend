@@ -1,5 +1,6 @@
 package com.postbox.service;
 
+import com.postbox.config.exceptions.EntityNotFoundException;
 import com.postbox.controler.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 import com.postbox.repository.UserNoSqlRepository;
@@ -22,34 +23,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userNoSqlRepository.findByUsername(username);
+        User user = userNoSqlRepository.findByUsername(username);
+        ensureUserNotNull(user, "User with username "+username+" not found.");
+        return user;
     }
 
     @Override
     public User create(User user, String plainPassword) {
-//        ensureUsernameUnique(user.getUsername());
-//        ensureEmailUnique(user.getEmail());
         User newUser = new User(user.getUsername(), user.getEmail(), encoder.encode(plainPassword)); // to avoid muttation
         return userNoSqlRepository.save(newUser);
     }
 
     @Override
     public void updateUserByUsername(String username, UserUpdateParam userUpdateParam) {
-//        ensureEmailUnique(userUpdateParam.getEmail());
         User user = userNoSqlRepository.findByUsername(username);
+        ensureUserNotNull(user, "User with username "+username+" not found.");
+
         user.setEmail(userUpdateParam.getEmail());
         userNoSqlRepository.save(user);
     }
 
     @Override
     public User getUserByPathIdentifier(String pathIdentifier) {
-        return userNoSqlRepository.findUserByPathIdentifier(pathIdentifier);
+        User user = userNoSqlRepository.findUserByPathIdentifier(pathIdentifier);
+        ensureUserNotNull(user, "User with path identifier "+pathIdentifier+" not found.");
+
+        return user;
     }
 
-//    private void ensureUsernameUnique(String username) {
-//        Assert.isNull(userNoSqlRepository.findByUsername(username), "Username already taken.");  // TODO: catch
-//    }
-//    private void ensureEmailUnique(String email) {
-//        Assert.isNull(userNoSqlRepository.findByEmail(email), "Email already taken.");  // TODO: catch
-//    }
+    private void ensureUserNotNull(User user, String errorMessage) {
+        if (user == null) {throw new EntityNotFoundException(errorMessage);}
+    }
 }

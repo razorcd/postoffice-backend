@@ -1,5 +1,6 @@
 package com.postbox.service;
 
+import com.postbox.config.exceptions.EntityNotFoundException;
 import com.postbox.controler.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 import com.postbox.factory.UserDocumentFactory;
@@ -51,6 +52,20 @@ public class UserServiceImplTests {
     }
 
     @Test
+    public void testGetUserByUsernameWhenUserDoesNOTExist() {
+        User userDummy = UserDocumentFactory.generateUser();
+        when(userNoSqlRepositoryMock.findByUsername(userDummy.getUsername())).thenReturn(null);
+
+        try {
+            subject.getUserByUsername(userDummy.getUsername());
+        } catch (EntityNotFoundException e) {
+            //test successful
+        }
+
+        verify(userNoSqlRepositoryMock, times(1)).findByUsername(userDummy.getUsername());
+    }
+
+    @Test
     public void testCreate() {
         User newUser = new User("create_Username1", "create_Email1", null);
 
@@ -80,11 +95,40 @@ public class UserServiceImplTests {
     }
 
     @Test
+    public void updateUserByUsernameWhenUserNotFound() {
+        User userDummy = UserDocumentFactory.generateUser();
+        when(userNoSqlRepositoryMock.findByUsername(userDummy.getUsername())).thenReturn(null);
+
+        try {
+            UserUpdateParam userUpdateParam = new UserUpdateParam("updateUserByUsername_email1@example.com");
+            subject.updateUserByUsername(userDummy.getUsername(), userUpdateParam);
+        } catch (EntityNotFoundException e) {
+            //successful
+        }
+
+        verify(userNoSqlRepositoryMock, times(0)).save(any(User.class));
+    }
+
+    @Test
     public void getUserByPathIdentifier() {
         User userDummy = UserDocumentFactory.generateUser();
         when(userNoSqlRepositoryMock.findUserByPathIdentifier(userDummy.getPathIdentifier())).thenReturn(userDummy);
 
         assertEquals(userDummy, subject.getUserByPathIdentifier(userDummy.getPathIdentifier()));
+
+        verify(userNoSqlRepositoryMock, times(1)).findUserByPathIdentifier(userDummy.getPathIdentifier());
+    }
+
+    @Test
+    public void getUserByPathIdentifierWhenNOTFound() {
+        User userDummy = UserDocumentFactory.generateUser();
+        when(userNoSqlRepositoryMock.findUserByPathIdentifier(userDummy.getPathIdentifier())).thenReturn(null);
+
+        try {
+            subject.getUserByPathIdentifier(userDummy.getPathIdentifier());
+        } catch (EntityNotFoundException e) {
+//            successful
+        }
 
         verify(userNoSqlRepositoryMock, times(1)).findUserByPathIdentifier(userDummy.getPathIdentifier());
     }
