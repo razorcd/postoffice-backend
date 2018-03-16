@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 public class CreateUserParam {
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 64)
     @Pattern(regexp = "[a-zA-Z0-9_\\-]+")
     private String username;
 

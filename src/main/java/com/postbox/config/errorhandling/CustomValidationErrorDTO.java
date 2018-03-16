@@ -1,28 +1,28 @@
 package com.postbox.config.errorhandling;
 
 public class CustomValidationErrorDTO {
-    private String object;
+    private Class object;
     private String field;
     private Object rejectedValue;
     private String message;
 
-    CustomValidationErrorDTO(String object, String message) {
+    CustomValidationErrorDTO(Class object, String message) {
         this.object = object;
         this.message = message;
     }
 
-    CustomValidationErrorDTO(String object, String field, Object value,  String message) {
+    CustomValidationErrorDTO(Class object, String field, Object value,  String message) {
         this.object = object;
         this.field = field;
         this.rejectedValue = value;
         this.message = message;
     }
 
-    public String getObject() {
+    public Class getObject() {
         return object;
     }
 
-    public void setObject(String object) {
+    public void setObject(Class object) {
         this.object = object;
     }
 

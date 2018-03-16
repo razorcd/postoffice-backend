@@ -14,6 +14,7 @@ import com.postbox.service.UserService;
 import com.sun.javaws.exceptions.BadFieldException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +34,7 @@ public class UserController {
 
     //TODO: Implement Security: authenticated and principal.username==username
     @GetMapping("/{username}")
+    @PreAuthorize("#username == principal.username")
     public UserDto getByUsername(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
         return UserMapper.userToDto(user);
@@ -41,7 +43,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto create(@RequestBody @Valid CreateUserParam createUserParams) {
-        validatePasswordEqual(CreateUserParam.class.toString(), createUserParams.getPlainPassword(), createUserParams.getPlainPasswordConfirmation());
+        validatePasswordEqual(CreateUserParam.class, createUserParams.getPlainPassword(), createUserParams.getPlainPasswordConfirmation());
 
         User newUser = new User(createUserParams.getUsername(), createUserParams.getEmail(), null);
         User user = userService.create(newUser, createUserParams.getPlainPassword());
@@ -52,11 +54,12 @@ public class UserController {
     }
 
     @PatchMapping("/{username}")
+    @PreAuthorize("#username == principal.username")
     public void update(@PathVariable String username, @RequestBody UserUpdateParam userUpdateParam) {
         userService.updateUserByUsername(username, userUpdateParam);
     }
 
-    private void validatePasswordEqual(String object, String plainPassword, String plainPasswordConfirmation) {
+    private void validatePasswordEqual(Class object, String plainPassword, String plainPasswordConfirmation) {
         if (!plainPassword.equals(plainPasswordConfirmation)) {
             throw new ValidationException("Invalid parameters.", new ValidationFieldException(object, "plainPasswordConfirmation", plainPasswordConfirmation, "must equal password"));
         };

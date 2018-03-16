@@ -9,22 +9,29 @@ public class UserDocumentFactory {
 //    private static Encoder encoder;  // TODO: inject password encoder
 
     public static User generateUser() {
-        return createUserObject(FAKER.internet().password());
+        return createUserObject();
     }
 
     public static User generateUser(String password) {
-        return createUserObject(password);
+        User user = createUserObject();
+        user.setEncryptedPassword(encodePasswod(password));
+        return user;
     }
 
-    private static User createUserObject(String password) {
+    public static User generateUser(String username, String password) {
+        User user = createUserObject();
+        user.setUsername(username);
+        user.generatePathIdentifier();
+        user.setEncryptedPassword(password);
+        return user;
+    }
 
+    private static User createUserObject() {
         User user = new User();
-
         user.setUsername(FAKER.lorem().characters(3,20, true));
         user.generatePathIdentifier();
         user.setEmail(FAKER.internet().emailAddress());
-        user.setEncryptedPassword(encodePasswod(password));
-
+        user.setEncryptedPassword(encodePasswod(FAKER.internet().password(8,20)));
         return user;
     }
 

@@ -17,11 +17,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
@@ -60,8 +63,9 @@ public class UserControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "UserController_GetByUsernameWhenExists_username1", password = "password", roles = "USER")
     public void testGetByUsernameWhenExists() throws Exception {
-        User userDummyInDb = UserDocumentFactory.generateUser();
+        User userDummyInDb = UserDocumentFactory.generateUser("UserController_GetByUsernameWhenExists_username1", "password");
         userNoSqlRepository.save(userDummyInDb);
 
         MvcResult response = this.mockMvc.perform(get(SERVICE_PATH+"/"+userDummyInDb.getUsername()).contentType(MediaType.APPLICATION_JSON))
@@ -75,8 +79,9 @@ public class UserControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "UserController_GetByUsernameWhenDoesNOTExist_username2", password = "password", roles = "USER")
     public void testGetByUsernameWhenDoesNOTExist() throws Exception {
-        User userDummyNotInDb = UserDocumentFactory.generateUser();
+        User userDummyNotInDb = UserDocumentFactory.generateUser("UserController_GetByUsernameWhenDoesNOTExist_username2", "password");
 
         MvcResult response = this.mockMvc.perform(get(SERVICE_PATH+"/"+userDummyNotInDb.getUsername()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
@@ -89,9 +94,21 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testUpdateExistingUser() throws Exception {
-        User userDummyInDb = UserDocumentFactory.generateUser();
+    @WithMockUser(username = "UserController_GetByUsernameThatIsNotPrincipal_username3", password = "password", roles = "USER")
+    public void testGetByUsernameThatIsNotPrincipal() throws Exception {
+        User userDummyInDb = UserDocumentFactory.generateUser("other_username3", "password");
         userNoSqlRepository.save(userDummyInDb);
+
+        this.mockMvc.perform(get(SERVICE_PATH+"/"+userDummyInDb.getUsername()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "UserController_UpdateExistingUser_username1", password = "password", roles = "USER")
+    public void testUpdateExistingUser() throws Exception {
+        User userDummyInDb = UserDocumentFactory.generateUser("UserController_UpdateExistingUser_username1", "password");
+        userNoSqlRepository.save(userDummyInDb);
+
         UserUpdateParam userUpdateParam = new UserUpdateParam("UserController#update_email1@example.com");
         String userUpdateParamString = objectMapper.writeValueAsString(userUpdateParam);
 
@@ -102,15 +119,31 @@ public class UserControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "UserController_UpdateNoExistingUser_username1", password = "password", roles = "USER")
     public void testUpdateNonExistingUser() throws Exception {
-        User userDummyInDb = UserDocumentFactory.generateUser();
+        User userDummy = UserDocumentFactory.generateUser("UserController_UpdateNoExistingUser_username1", "password");
         UserUpdateParam userUpdateParam = new UserUpdateParam("UserController#update_email2@example.com");
         String userUpdateParamString = objectMapper.writeValueAsString(userUpdateParam);
 
-        this.mockMvc.perform(patch(SERVICE_PATH + "/" + userDummyInDb.getUsername()).contentType(MediaType.APPLICATION_JSON).content(userUpdateParamString))
+        this.mockMvc.perform(patch(SERVICE_PATH + "/" + userDummy.getUsername()).contentType(MediaType.APPLICATION_JSON).content(userUpdateParamString))
                 .andExpect(status().isNotFound());
 
-        assertNull(userNoSqlRepository.findByUsername(userDummyInDb.getUsername()));
+        //assert no other record was created in db
+        List<User> anyUsersInDb = userNoSqlRepository.findAll();
+        assertTrue(anyUsersInDb.isEmpty());
+    }
+
+    @Test
+    @WithMockUser(username = "UserController_UpdateUserThatIsNotPrincipal_username1", password = "password", roles = "USER")
+    public void testUpdateUserThatIsNotPrincipal() throws Exception {
+        User userDummyInDb = UserDocumentFactory.generateUser("other_username1", "password");
+        userNoSqlRepository.save(userDummyInDb);
+
+        UserUpdateParam userUpdateParam = new UserUpdateParam("UserController#update_email3@example.com");
+        String userUpdateParamString = objectMapper.writeValueAsString(userUpdateParam);
+
+        this.mockMvc.perform(patch(SERVICE_PATH + "/" + userDummyInDb.getUsername()).contentType(MediaType.APPLICATION_JSON).content(userUpdateParamString))
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -130,12 +163,12 @@ public class UserControllerTests {
         assertEquals(createUserParam.getUsername(), responseUserDto.getUsername());
 
         // check created DB object
-        Optional<User> userInDb = userNoSqlRepository.findAll().stream().findFirst();
-        assertTrue(userInDb.isPresent());
-        assertNotNull(userInDb.get().getId());
-        assertEquals(userDummy.getUsername(), userInDb.get().getUsername());
-        assertEquals(userDummy.getEmail(), userInDb.get().getEmail());
-        assertTrue(passwordEncoder.matches("myPlainPassword", userInDb.get().getEncryptedPassword()));
+        Optional<User> createdUserInDb = userNoSqlRepository.findAll().stream().findFirst();
+        assertTrue(createdUserInDb.isPresent());
+        assertNotNull(createdUserInDb.get().getId());
+        assertEquals(userDummy.getUsername(), createdUserInDb.get().getUsername());
+        assertEquals(userDummy.getEmail(), createdUserInDb.get().getEmail());
+        assertTrue(passwordEncoder.matches("myPlainPassword", createdUserInDb.get().getEncryptedPassword()));
     }
 
     @Test
@@ -149,7 +182,7 @@ public class UserControllerTests {
         this.mockMvc.perform(post(SERVICE_PATH).contentType(MediaType.APPLICATION_JSON).content(userParamString))
                 .andExpect(status().isBadRequest());
 
-        Optional<User> userInDb = userNoSqlRepository.findAll().stream().findFirst();
-        assertFalse(userInDb.isPresent());
+        List<User> anyUsersInDb = userNoSqlRepository.findAll();
+        assertTrue(anyUsersInDb.isEmpty());
     }
 }

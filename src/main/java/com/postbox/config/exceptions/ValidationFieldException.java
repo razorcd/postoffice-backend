@@ -2,7 +2,7 @@ package com.postbox.config.exceptions;
 
 public class ValidationFieldException extends RuntimeException {
 
-    private final String object;
+    private final Class object;
     private final String field;
     private final Object value;
 
@@ -14,14 +14,14 @@ public class ValidationFieldException extends RuntimeException {
      * @param value the invalid value.
      * @param message the detail message.
      */
-    public ValidationFieldException(String object,  String field, Object value, String message) {
+    public ValidationFieldException(Class object,  String field, Object value, String message) {
         super(message);
         this.object = object;
         this.field = field;
         this.value = value;
     }
 
-    public String getObject() {
+    public Class getObject() {
         return object;
     }
 
