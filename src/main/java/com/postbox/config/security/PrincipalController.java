@@ -1,4 +1,4 @@
-package com.postbox.config;
+package com.postbox.config.security;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +10,12 @@ import java.security.Principal;
 @CrossOrigin("*")
 public class PrincipalController {
 
+    /**
+     * Get current logged in User Principal from Spring Context
+     *
+     * @param principal injected by Spring
+     * @return current Principal
+     */
     @GetMapping("/principal")
     public Principal getPrincipal(Principal principal) {
         return principal;

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeforeSaveListener extends AbstractMongoEventListener<User> {
 
+    /**
+     * Callback executed before a document is persisted (when .save is called).
+     */
     @Override
     public void onBeforeSave(BeforeSaveEvent<User> event) {
         System.out.println("!!! User is saving !!!");

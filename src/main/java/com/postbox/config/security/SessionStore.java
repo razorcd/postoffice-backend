@@ -1,4 +1,4 @@
-package com.postbox.config;
+package com.postbox.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

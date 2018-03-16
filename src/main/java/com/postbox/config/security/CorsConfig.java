@@ -1,4 +1,4 @@
-package com.postbox.config;
+package com.postbox.config.security;
 
 import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;

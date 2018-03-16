@@ -8,6 +8,9 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 public class MongoValidators {
 
+    /**
+     * Enables Hibernate validators for MongoDb
+     */
     @Bean
     public ValidatingMongoEventListener validatingMongoEventListener() {
         return new ValidatingMongoEventListener(validator());

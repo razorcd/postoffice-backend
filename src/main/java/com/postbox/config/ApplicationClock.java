@@ -10,6 +10,9 @@ import java.time.ZoneId;
 @Configuration
 public class ApplicationClock {
 
+    /**
+     * Application clock. Inject it when current time is needed then mock it in tests.
+     */
     @Bean
     Clock clock() {
         return Clock.systemDefaultZone();

@@ -1,4 +1,4 @@
-package com.postbox.config;
+package com.postbox.config.security;
 
 import com.postbox.document.User;
 import com.postbox.repository.UserNoSqlRepository;
