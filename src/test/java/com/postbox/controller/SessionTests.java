@@ -1,6 +1,5 @@
-package com.postbox.config.security;
+package com.postbox.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.postbox.document.User;
 import com.postbox.factory.UserDocumentFactory;
 import com.postbox.repository.UserNoSqlRepository;
@@ -11,20 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.*;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import org.springframework.util.MultiValueMap;
 
 import javax.servlet.http.Cookie;
-import java.util.HashMap;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
@@ -35,9 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc
 public class SessionTests {
-    private static String CREATE_SESSION_PATH = "/login";
-    private static String DESTROY_SESSION_PATH = "/logout";
-    private static String GET_PRINCIPAL_PATH = "/principal";
+    private final String CREATE_SESSION_PATH = "/login";
+    private final String DESTROY_SESSION_PATH = "/logout";
+    private final String GET_PRINCIPAL_PATH = "/principal";
 
     @Autowired
     private UserNoSqlRepository userNoSqlRepository;

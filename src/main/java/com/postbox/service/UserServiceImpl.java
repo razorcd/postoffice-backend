@@ -1,13 +1,12 @@
 package com.postbox.service;
 
 import com.postbox.config.exceptions.EntityNotFoundException;
-import com.postbox.controler.dto.param.UserUpdateParam;
+import com.postbox.controller.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 import com.postbox.repository.UserNoSqlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @Service
 public class UserServiceImpl implements UserService {

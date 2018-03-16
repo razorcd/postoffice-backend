@@ -1,18 +1,19 @@
-package com.postbox.controler;
+package com.postbox.controller;
 
-import com.postbox.controler.deserializer.CookieDeserielizer;
-import com.postbox.controler.deserializer.HttpRequestDeserializer;
-import com.postbox.controler.dto.IncomingRequestDto;
-import com.postbox.controler.mapper.HttpRequestMapper;
-import com.postbox.controler.mapper.IncomingRequestMapper;
+import com.postbox.config.exceptions.EntityNotFoundException;
+import com.postbox.controller.deserializer.CookieDeserielizer;
+import com.postbox.controller.deserializer.HttpRequestDeserializer;
+import com.postbox.controller.dto.IncomingRequestDto;
+import com.postbox.controller.mapper.HttpRequestMapper;
+import com.postbox.controller.mapper.IncomingRequestMapper;
 import com.postbox.document.IncomingRequest;
 import com.postbox.document.User;
 import com.postbox.service.IncomingRequestService;
 import com.postbox.service.UserService;
-import com.postbox.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class BoxController {
+public class IncomingRequestController {
 
     IncomingRequestService incomingRequestServiceImpl;
     UserService userService;
@@ -33,10 +34,10 @@ public class BoxController {
     CookieDeserielizer cookieDeserielizer;
 
     @Autowired
-    public BoxController(IncomingRequestService incomingRequestServiceImpl,
-                         UserService userService,
-                         HttpRequestDeserializer httpRequestDeserializer,
-                         CookieDeserielizer cookieDeserielizer) {
+    public IncomingRequestController(IncomingRequestService incomingRequestServiceImpl,
+                                     UserService userService,
+                                     HttpRequestDeserializer httpRequestDeserializer,
+                                     CookieDeserielizer cookieDeserielizer) {
         this.incomingRequestServiceImpl = incomingRequestServiceImpl;
         this.userService = userService;
         this.httpRequestDeserializer = httpRequestDeserializer;
@@ -48,16 +49,18 @@ public class BoxController {
      *
      * @return list of all old requests
      */
-    @CrossOrigin(origins = "*", maxAge = 3600)
-    // TODO: spring security principal.getUsername == username
-    @RequestMapping(value = "/user/{username}/requests", method = RequestMethod.GET)
-    public @ResponseBody List<IncomingRequestDto> getRequests(@PathVariable String username) {
+    @RequestMapping(value = "/users/{username}/incomingrequests", method = RequestMethod.GET)
+    @PreAuthorize("#username == principal.username")
+    public @ResponseBody List<IncomingRequestDto> getIncomingRequests(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
+        if (user == null) {throw new EntityNotFoundException("User with username "+username+" not found.");}
+
         List<IncomingRequest> incomingRequests = incomingRequestServiceImpl.getByUserPathIdentifier(user.getPathIdentifier());
         List<IncomingRequestDto> incomingRequestDtos = incomingRequests.stream().
                 map(IncomingRequestMapper::incomingRequestToDto).
                 collect(Collectors.toList());
         Collections.reverse(incomingRequestDtos);
+
         return incomingRequestDtos;
     }
 
@@ -79,36 +82,6 @@ public class BoxController {
             incomingRequestServiceImpl.save(incomingRequest, pathIdentifier);
         }
 
-
-//        JavaObjectSerializer.write(request, response);
-
-//        response.reset();
-//        response.setStatus(HttpStatus.NO_CONTENT.value());
-
-//        for (Cookie cookie : request.getCookies()) {
-//            cookie.setValue("");
-//            cookie.setMaxAge(0);
-//            cookie.setPath("/");
-//
-//            response.addCookie(cookie);
-//        }
-//
-//
-//        for (String headerName : response.getHeaderNames()) {
-//            request.getHeader(headerName);
-//        }
-
-
-
-//        response.addIntHeader("Refresh", 3);
-
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
-    @RequestMapping("/private")
-    @ResponseBody
-    public String getPrivate() {
-        return "private";
-    }
-
 }

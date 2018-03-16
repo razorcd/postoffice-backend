@@ -4,3 +4,5 @@ spring:
       database: postbox_test
   session:
     store-type: none
+service:
+  host: "http://localhost"

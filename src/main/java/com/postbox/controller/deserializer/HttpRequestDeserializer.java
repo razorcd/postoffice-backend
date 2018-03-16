@@ -1,4 +1,4 @@
-package com.postbox.controler.deserializer;
+package com.postbox.controller.deserializer;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;

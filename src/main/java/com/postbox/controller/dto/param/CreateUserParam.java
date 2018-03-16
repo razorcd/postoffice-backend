@@ -1,4 +1,4 @@
-package com.postbox.controler.dto.param;
+package com.postbox.controller.dto.param;
 
 import org.hibernate.validator.constraints.NotBlank;
 

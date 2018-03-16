@@ -1,4 +1,4 @@
-package com.postbox.controler.deserializer;
+package com.postbox.controller.deserializer;
 
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
-package com.postbox.controler.mapper;
+package com.postbox.controller.mapper;
 
-import com.postbox.controler.dto.UserDto;
+import com.postbox.controller.dto.UserDto;
 import com.postbox.document.User;
 
 public class UserMapper {

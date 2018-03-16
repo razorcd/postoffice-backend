@@ -1,12 +1,12 @@
-package com.postbox.controler;
+package com.postbox.controller;
 
 import com.postbox.config.security.CustomAuthentication;
 import com.postbox.config.exceptions.ValidationException;
 import com.postbox.config.exceptions.ValidationFieldException;
-import com.postbox.controler.dto.UserDto;
-import com.postbox.controler.dto.param.CreateUserParam;
-import com.postbox.controler.dto.param.UserUpdateParam;
-import com.postbox.controler.mapper.UserMapper;
+import com.postbox.controller.dto.UserDto;
+import com.postbox.controller.dto.param.CreateUserParam;
+import com.postbox.controller.dto.param.UserUpdateParam;
+import com.postbox.controller.mapper.UserMapper;
 import com.postbox.document.User;
 import com.postbox.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

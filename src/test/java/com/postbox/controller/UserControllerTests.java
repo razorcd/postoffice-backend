@@ -1,10 +1,10 @@
-package com.postbox.controler;
+package com.postbox.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.postbox.config.errorhandling.CustomErrorDto;
-import com.postbox.controler.dto.UserDto;
-import com.postbox.controler.dto.param.CreateUserParam;
-import com.postbox.controler.dto.param.UserUpdateParam;
+import com.postbox.controller.dto.UserDto;
+import com.postbox.controller.dto.param.CreateUserParam;
+import com.postbox.controller.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 import com.postbox.factory.UserDocumentFactory;
 import com.postbox.repository.UserNoSqlRepository;
@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -39,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc
 public class UserControllerTests {
-    private static String SERVICE_PATH = "/users";
+    private final String SERVICE_PATH = "/users";
 
     @Autowired
     private UserNoSqlRepository userNoSqlRepository;

@@ -1,6 +1,6 @@
 package com.postbox.service;
 
-import com.postbox.controler.dto.param.UserUpdateParam;
+import com.postbox.controller.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 
 public interface UserService {

@@ -1,4 +1,4 @@
-package com.postbox.controler.dto;
+package com.postbox.controller.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 

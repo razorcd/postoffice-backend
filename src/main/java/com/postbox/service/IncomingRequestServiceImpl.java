@@ -1,5 +1,6 @@
 package com.postbox.service;
 
+import com.postbox.config.exceptions.EntityNotFoundException;
 import com.postbox.document.IncomingRequest;
 import com.postbox.document.User;
 import com.postbox.repository.IncomingRequestNoSqlRepository;

@@ -1,7 +1,7 @@
-package com.postbox.controler.mapper;
+package com.postbox.controller.mapper;
 
-import com.postbox.controler.dto.CookieDto;
-import com.postbox.controler.dto.IncomingRequestDto;
+import com.postbox.controller.dto.CookieDto;
+import com.postbox.controller.dto.IncomingRequestDto;
 import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
 

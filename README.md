@@ -5,7 +5,7 @@
  It will receive any request and display the the full data and metadata of the request in the browser logger.
 
 ## TODO:
-- [ ] implement persistence of complete incomingRequests (url, action, headers, cookies, body, attachments)
+- [ ] implement persistence of complete incomingRequests (url, action, headers, cookies, body)
 - [ ] add integration tests
 - [x] build frontend to view the persisted incomingRequests with an automatic refresher
 - [ ] add tests to cover all contentTypes, bodies, methods, etc

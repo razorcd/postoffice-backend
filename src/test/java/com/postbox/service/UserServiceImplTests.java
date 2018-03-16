@@ -1,7 +1,7 @@
 package com.postbox.service;
 
 import com.postbox.config.exceptions.EntityNotFoundException;
-import com.postbox.controler.dto.param.UserUpdateParam;
+import com.postbox.controller.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 import com.postbox.factory.UserDocumentFactory;
 import com.postbox.repository.UserNoSqlRepository;
@@ -9,12 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;

@@ -3,7 +3,12 @@ package com.postbox.factory;
 import com.github.javafaker.Faker;
 import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
+import com.postbox.utils.Helper;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +36,8 @@ public class IncomingRequestDocumentFactory {
 
         incomingRequest.setCookies(generateCookieList());
         incomingRequest.setBody(FAKER.lorem().paragraph());
-
+        incomingRequest.setTimestamp(Helper.randomInstant(Instant.EPOCH, Instant.now()).atZone(ZoneId.systemDefault()).toLocalDateTime());
+        incomingRequest.setUserPathIdentifier(FAKER.lorem().characters(12));
         return incomingRequest;
     }
 

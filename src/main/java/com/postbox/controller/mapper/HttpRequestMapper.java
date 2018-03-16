@@ -1,7 +1,7 @@
-package com.postbox.controler.mapper;
+package com.postbox.controller.mapper;
 
-import com.postbox.controler.deserializer.CookieDeserielizer;
-import com.postbox.controler.deserializer.HttpRequestDeserializer;
+import com.postbox.controller.deserializer.CookieDeserielizer;
+import com.postbox.controller.deserializer.HttpRequestDeserializer;
 import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
 
