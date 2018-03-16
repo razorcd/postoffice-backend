@@ -9,9 +9,11 @@ public class UserMapper {
         UserDto userDto = new UserDto();
 
         userDto.setUsername(user.getUsername());
+        userDto.setPathIdentifier(user.getPathIdentifier());
         userDto.setEmail(user.getEmail());
 
         return userDto;
     }
 
+    private UserMapper() {}
 }

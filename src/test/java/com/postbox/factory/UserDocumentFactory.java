@@ -20,7 +20,8 @@ public class UserDocumentFactory {
 
         User user = new User();
 
-        user.setUsername(FAKER.name().username());
+        user.setUsername(FAKER.lorem().characters(3,20, true));
+        user.generatePathIdentifier();
         user.setEmail(FAKER.internet().emailAddress());
         user.setEncryptedPassword(encodePasswod(password));
 

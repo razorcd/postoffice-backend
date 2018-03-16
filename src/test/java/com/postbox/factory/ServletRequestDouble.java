@@ -90,7 +90,7 @@ public class ServletRequestDouble {
         this.body = body;
     }
 
-    public MockHttpServletRequestBuilder getMockHttpServletRequestBuilder() {
+    public MockHttpServletRequestBuilder getMockHttpServletRequestBuilder() { // TODO: change to private constructor
         createMockHttpServletRequestBuilder();
         return mockHttpServletRequestBuilder;
     }

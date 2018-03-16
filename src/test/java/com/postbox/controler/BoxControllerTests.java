@@ -1,4 +1,4 @@
-package com.postbox.Controller;
+package com.postbox.controler;
 
 import com.postbox.controler.BoxController;
 import com.postbox.factory.ServletRequestDouble;
@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -55,7 +56,7 @@ public class BoxControllerTests {
 
     @Test
     public void testRecordRequest() throws Exception {
-        Date startTime = new Date();
+        LocalDateTime startTime = LocalDateTime.now();
         ServletRequestDouble servletRequestDouble = new ServletRequestDouble();
         servletRequestDouble.setUrl(SERVICE_HOST+SERVICE_PATH+servletRequestDouble.getUrl());
 
@@ -72,6 +73,6 @@ public class BoxControllerTests {
 //        assertThat(incomingRequest.get().getHeaders()).isEqualTo(servletRequestDouble.getHeaders());
 //        assertThat(incomingRequest.get().getCookies()).isEqualTo(servletRequestDouble.getCookies());
         assertThat(incomingRequest.get().getBody()).isEqualTo(servletRequestDouble.getBody());
-        assertThat(incomingRequest.get().getTimestamp()).isBetween(startTime, new Date());
+        assertThat(incomingRequest.get().getTimestamp()).isBetween(startTime, LocalDateTime.now());
     }
 }

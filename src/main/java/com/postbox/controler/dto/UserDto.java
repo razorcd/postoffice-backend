@@ -7,14 +7,17 @@ public class UserDto {
     @NotBlank
     private String username;
 
+    private String pathIdentifier;
+
     @NotBlank
     private String email;
 
     public UserDto() {
     }
 
-    public UserDto(String username, String email) {
+    public UserDto(String username, String pathIdentifier, String email) {
         this.username = username;
+        this.pathIdentifier = pathIdentifier;
         this.email = email;
     }
 
@@ -32,5 +35,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPathIdentifier() {
+        return pathIdentifier;
+    }
+
+    public void setPathIdentifier(String pathIdentifier) {
+        this.pathIdentifier = pathIdentifier;
     }
 }

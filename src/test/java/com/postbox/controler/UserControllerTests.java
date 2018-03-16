@@ -1,4 +1,4 @@
-package com.postbox.Controller;
+package com.postbox.controler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.postbox.controler.UserController;
@@ -18,10 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,11 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc
 public class UserControllerTests {
-    //    TODO: cat't add parameterized unit tests to run the test on different request methods ({"get", "post" ... })
-    //    TODO: because this expects to change the SpringJUnit4ClassRunner test runner to Parameterized test runner.
-    //    TODO: In JUnit 5 use it's new Parameters feature.
-
-    //    TODO: @Value("{}")
     private static String SERVICE_PATH = "/users";
 
     @Autowired
@@ -55,13 +53,40 @@ public class UserControllerTests {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
     @Before
     public void before() {
         userNoSqlRepository.deleteAll();
     }
 
+    @Test
+    public void testGetByUsernameWhenExists() throws Exception {
+        User userDummyInDb = UserDocumentFactory.generateUser();
+        userNoSqlRepository.save(userDummyInDb);
 
-    //TODO: add JUnit5 and nest these 2:
+        MvcResult response = this.mockMvc.perform(get(SERVICE_PATH+"/"+userDummyInDb.getUsername()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        UserDto userDtoResponse = objectMapper.readValue(response.getResponse().getContentAsString(), UserDto.class);
+
+        assertEquals(userDummyInDb.getUsername(), userDtoResponse.getUsername());
+        assertEquals(userDummyInDb.getEmail(), userDtoResponse.getEmail());
+        assertEquals(userDummyInDb.getPathIdentifier(), userDtoResponse.getPathIdentifier());
+    }
+
+    @Test
+    public void testGetByUsernameWhendoesNOTExist() throws Exception {
+        User userDummyNotInDb = UserDocumentFactory.generateUser();
+
+        this.mockMvc.perform(get(SERVICE_PATH+"/"+userDummyNotInDb.getUsername()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testUpdate() {
+
+    }
+
     @Test
     public void testCreateUserWithValidPassword() throws Exception {
         User userDummy = UserDocumentFactory.generateUser("myPlainPassword");
@@ -71,7 +96,7 @@ public class UserControllerTests {
         String userParamString = objectMapper.writeValueAsString(createUserParam);
 
         this.mockMvc.perform(post(SERVICE_PATH).contentType(MediaType.APPLICATION_JSON).content(userParamString))
-                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername(), userDummy.getEmail()))))
+                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername(), userDummy.getPathIdentifier(), userDummy.getEmail()))))
                 .andExpect(status().isCreated());
 
         Optional<User> userInDb = userNoSqlRepository.findAll().stream().findFirst();
@@ -91,7 +116,7 @@ public class UserControllerTests {
         String userParamString = objectMapper.writeValueAsString(createUserParam);
 
         this.mockMvc.perform(post(SERVICE_PATH).contentType(MediaType.APPLICATION_JSON).content(userParamString))
-                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername(), userDummy.getEmail()))))
+                .andExpect(content().json(objectMapper.writeValueAsString(new UserDto(userDummy.getUsername(), userDummy.getPathIdentifier(), userDummy.getEmail()))))
                 .andExpect(status().isBadRequest());
 
         Optional<User> userInDb = userNoSqlRepository.findAll().stream().findFirst();

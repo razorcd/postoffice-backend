@@ -27,24 +27,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user, String plainPassword) {
-        ensureUsernameUnique(user.getUsername());
-        ensureEmailUnique(user.getEmail());
+//        ensureUsernameUnique(user.getUsername());
+//        ensureEmailUnique(user.getEmail());
         User newUser = new User(user.getUsername(), user.getEmail(), encoder.encode(plainPassword)); // to avoid muttation
         return userNoSqlRepository.save(newUser);
     }
 
     @Override
     public void updateUserByUsername(String username, UserUpdateParam userUpdateParam) {
-        ensureEmailUnique(userUpdateParam.getEmail());
+//        ensureEmailUnique(userUpdateParam.getEmail());
         User user = userNoSqlRepository.findByUsername(username);
         user.setEmail(userUpdateParam.getEmail());
         userNoSqlRepository.save(user);
     }
 
-    private void ensureUsernameUnique(String username) {
-        Assert.isNull(userNoSqlRepository.findByUsername(username), "Username already taken.");  // TODO: catch
+    @Override
+    public User getUserByPathIdentifier(String pathIdentifier) {
+        return userNoSqlRepository.findUserByPathIdentifier(pathIdentifier);
     }
-    private void ensureEmailUnique(String email) {
-        Assert.isNull(userNoSqlRepository.findByEmail(email), "Email already taken.");  // TODO: catch
-    }
+
+//    private void ensureUsernameUnique(String username) {
+//        Assert.isNull(userNoSqlRepository.findByUsername(username), "Username already taken.");  // TODO: catch
+//    }
+//    private void ensureEmailUnique(String email) {
+//        Assert.isNull(userNoSqlRepository.findByEmail(email), "Email already taken.");  // TODO: catch
+//    }
 }

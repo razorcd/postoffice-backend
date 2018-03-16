@@ -1,6 +1,5 @@
 package com.postbox.service;
 
-import com.postbox.config.UserPrincipal;
 import com.postbox.controler.dto.param.UserUpdateParam;
 import com.postbox.document.User;
 
@@ -32,4 +31,13 @@ public interface UserService {
      * @return nothing
      */
     void updateUserByUsername(String username, UserUpdateParam userUpdateParam);
+
+    /**
+     * Get a User by it's path identifier
+     *
+     * @param pathIdentifier to identify the User
+     * @return [User] the requested User
+     * @throws [NotFoundException] if user is not found
+     */
+    User getUserByPathIdentifier(String pathIdentifier);
 }

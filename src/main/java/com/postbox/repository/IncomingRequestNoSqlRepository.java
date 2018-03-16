@@ -1,12 +1,15 @@
 package com.postbox.repository;
 
 import com.postbox.document.IncomingRequest;
+import com.postbox.document.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
 public interface IncomingRequestNoSqlRepository extends MongoRepository<IncomingRequest, Long> {
-//    public List<IncomingRequest> findAll();
+//    List<IncomingRequest> findAll();
 //
-//    public IncomingRequest save(IncomingRequest incomingRequest);
+//    IncomingRequest save(IncomingRequest incomingRequest);
+
+    List<IncomingRequest> findByUserPathIdentifier(String userPathIdentifier);
 }

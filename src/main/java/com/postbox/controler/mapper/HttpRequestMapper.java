@@ -6,6 +6,7 @@ import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class HttpRequestMapper {
     }
 
     private List<Cookie> servletCookieToCookieModel(HttpServletRequest request) {
-        AtomicReference<List<Cookie>> cookieList = new AtomicReference<>();
+        AtomicReference<List<Cookie>> cookieList = new AtomicReference<>(new ArrayList<>());
 
          Optional.ofNullable(httpRequestDeserializer.getCookies(request)).ifPresent( servletCookies ->
                 cookieList.set(Arrays.stream(servletCookies).map(servletCookie -> {
@@ -70,4 +71,6 @@ public class HttpRequestMapper {
 
          return cookieList.get();
     }
+
+    private HttpRequestMapper() {}
 }

@@ -4,10 +4,11 @@ import com.postbox.document.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface UserNoSqlRepository extends MongoRepository<User, Long> {
-//    public List<User> findAll();
+//    List<User> findAll();
 //
-//    public User save(User user);
+//    User save(User user);
 
-    public User findByUsername(String username);
-    public User findByEmail(String email);
+    User findByUsername(String username);
+    User findByEmail(String email);
+    User findUserByPathIdentifier(String pathIdentifier);
 }

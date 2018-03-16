@@ -9,7 +9,7 @@ public class CreateUserParam {
 
     @NotBlank
     @Size(min = 3, max = 20)
-    @Pattern(regexp = "[a-zA-Z0-9_\\-.]+")
+    @Pattern(regexp = "[a-zA-Z0-9_\\-]+")
     private String username;
 
     @NotBlank

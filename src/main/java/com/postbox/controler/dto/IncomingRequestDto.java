@@ -1,10 +1,10 @@
 package com.postbox.controler.dto;
 
-import javax.servlet.http.Cookie;
-import java.util.*;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class IncomingRequestDto {
@@ -31,7 +31,7 @@ public class IncomingRequestDto {
     @Size(max=16777216) //2MB
     private String body;
 
-    Date timestamp;
+    long timestamp;
 
     public String getId() {
         return id;
@@ -89,11 +89,11 @@ public class IncomingRequestDto {
         this.body = body;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 }

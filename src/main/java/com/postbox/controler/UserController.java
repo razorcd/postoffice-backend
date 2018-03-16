@@ -31,6 +31,7 @@ public class UserController {
     @GetMapping("/{username}")
     public UserDto getByUsername(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
+//        if (user == null) {throw new ResourceNotFoundException("User with username "+username+" not found."); //TODO: create exception
         return UserMapper.userToDto(user);
     }
 
@@ -52,7 +53,7 @@ public class UserController {
         userService.updateUserByUsername(username, userUpdateParam);
     }
 
-
+//    TODO: add custome validator
     private void validatePasswordEqual(String plainPassword, String plainPasswordConfirmation) {
         if (!plainPassword.equals(plainPasswordConfirmation)) {
             throw new ValidationException("Password confirmation must equal password.");

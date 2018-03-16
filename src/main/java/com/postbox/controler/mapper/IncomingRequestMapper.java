@@ -5,6 +5,7 @@ import com.postbox.controler.dto.IncomingRequestDto;
 import com.postbox.document.Cookie;
 import com.postbox.document.IncomingRequest;
 
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,8 +20,8 @@ public class IncomingRequestMapper {
         incomingRequestDto.setParams(paramsToMap(incomingRequest));
         incomingRequestDto.setHeaders(headersToMap(incomingRequest));
         incomingRequestDto.setMethod(incomingRequest.getMethod());
-        incomingRequestDto.setCookies(incomingRequest.getCookies().stream().map(cookie -> IncomingRequestMapper.cookieToDto(cookie)).collect(Collectors.toList()));
-        incomingRequestDto.setTimestamp(incomingRequest.getTimestamp());
+        incomingRequestDto.setCookies(incomingRequest.getCookies().stream().map(IncomingRequestMapper::cookieToDto).collect(Collectors.toList()));
+        incomingRequestDto.setTimestamp(incomingRequest.getTimestamp().atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli());
         return incomingRequestDto;
     }
 
@@ -53,4 +54,6 @@ public class IncomingRequestMapper {
         );
         return headersMap;
     }
+
+    private IncomingRequestMapper() {}
 }

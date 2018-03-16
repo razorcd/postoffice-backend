@@ -26,7 +26,7 @@
 spring:
   data:
     mongodb:
-      database: postbox
+      database: postbox3
   session:
     store-type: none
 #    mongo:
